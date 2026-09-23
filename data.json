@@ -403,7 +403,7 @@
       "name": "10일, 이제 두렵지 않아요",
       "sub": "원천세·4대보험 자동서식",
       "kind": "excel",
-      "url": "https://christmasgo7862-glitch.github.io/barodogu/files/10%EC%9D%BC_%EC%9D%B4%EC%A0%9C_%EB%91%90%EB%A0%B5%EC%A7%80_%EC%95%8A%EC%95%84%EC%9A%94.xlsm",
+      "url": "https://christmasgo7862-glitch.github.io/barodogu/files/ten-days.xlsm",
       "lead": "매달 받는 급여·기관부담금 자료 6개를 순서대로 넣으면 K-에듀파인 수납금액과 홈택스·위택스 신고금액이 자동으로 정리됩니다.",
       "feats": [
         "자료 6개를 [다음 파일 넣기] 버튼으로 차례로 불러오기",
@@ -454,7 +454,8 @@
           "text": "총액 검증"
         }
       ],
-      "short": "원천세·4대보험"
+      "short": "원천세·4대보험",
+      "fileName": "10일_이제_두렵지_않아요.xlsm"
     }
   ]
 }
