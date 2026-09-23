@@ -1,0 +1,24 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 바로도구함 집계: 누구나 읽기, 숫자는 한 번에 1씩만 늘리거나 줄이기
+    function fieldsOk() { return ['views', 'uses', 'likes', 'favs', 'shares']; }
+    function nv(f) { return request.resource.data.get(f, 0); }
+    function ov(f) { return resource.data.get(f, 0); }
+    function step(f) { return nv(f) is int && nv(f) >= 0 && nv(f) - ov(f) >= -1 && nv(f) - ov(f) <= 1; }
+    function newOk(f) { return nv(f) is int && nv(f) >= 0 && nv(f) <= 1; }
+
+    match /stats/{id} {
+      allow read: if true;
+      allow create: if id.matches('^[a-z0-9-]{1,40}$')
+        && request.resource.data.keys().hasOnly(fieldsOk())
+        && newOk('views') && newOk('uses') && newOk('likes') && newOk('favs') && newOk('shares');
+      allow update: if request.resource.data.diff(resource.data).affectedKeys().hasOnly(fieldsOk())
+        && step('views') && step('uses') && step('likes') && step('favs') && step('shares');
+      allow delete: if false;
+    }
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
