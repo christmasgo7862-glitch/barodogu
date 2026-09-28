@@ -1,14 +1,19 @@
 {
   "site": {
     "url": "https://christmasgo7862-glitch.github.io/barodogu/",
-    "version": "2.0",
-    "updated": "2026.09.23"
+    "version": "2.2",
+    "updated": "2026.09.28"
   },
   "counter": {
     "projectId": "",
     "apiKey": ""
   },
   "news": [
+    {
+      "date": "2026.09.28",
+      "title": "바로도구함 2.2 새 디자인",
+      "text": "어두운 오로라 배경과 유리 카드로 화면을 완전히 새로 바꾸고, 종류별 보기(웹도구·엑셀 서식·설치형·즐겨찾기)를 넣었습니다."
+    },
     {
       "date": "2026.09.23",
       "title": "「10일, 이제 두렵지 않아요」 내려받기 시작",
@@ -83,7 +88,8 @@
           "text": "일괄 출력"
         }
       ],
-      "short": "출장여비 계산"
+      "short": "출장여비 계산",
+      "area": "복무 · 여비"
     },
     {
       "id": "barobong",
@@ -135,7 +141,8 @@
           "text": "소급액 검토"
         }
       ],
-      "short": "호봉정정 급여정산"
+      "short": "호봉정정 급여정산",
+      "area": "급여 · 호봉"
     },
     {
       "id": "barogeunsok",
@@ -187,7 +194,8 @@
           "text": "급여대장 대조"
         }
       ],
-      "short": "근속수당 계산"
+      "short": "근속수당 계산",
+      "area": "급여 · 근속수당"
     },
     {
       "id": "time-lecturer-pay",
@@ -239,7 +247,8 @@
           "text": "실지급액 계산"
         }
       ],
-      "short": "시간강사 수당 계산"
+      "short": "시간강사 수당 계산",
+      "area": "급여 · 강사수당"
     },
     {
       "id": "gongjik-profile",
@@ -290,7 +299,8 @@
           "text": "빠른·전문 검사"
         }
       ],
-      "short": "업무성향·스트레스 검사"
+      "short": "업무성향·스트레스 검사",
+      "area": "인사 · 자기이해"
     },
     {
       "id": "hakunwi-minutes",
@@ -343,7 +353,8 @@
           "text": "홍보문 DOCX"
         }
       ],
-      "short": "회의록·홍보문 작성"
+      "short": "회의록·홍보문 작성",
+      "area": "운영위 · 회의록"
     },
     {
       "id": "yeoncha-onestop",
@@ -396,12 +407,13 @@
           "text": "휴복직 반영"
         }
       ],
-      "short": "연차수당 계산"
+      "short": "연차수당 계산",
+      "area": "급여 · 연차수당"
     },
     {
       "id": "ten-days",
       "name": "10일, 이제 두렵지 않아요",
-      "sub": "원천세·4대보험 자동서식",
+      "sub": "10일 세외 수납·신고 자동서식",
       "kind": "excel",
       "url": "https://christmasgo7862-glitch.github.io/barodogu/files/ten-days.xlsm",
       "lead": "매달 받는 급여·기관부담금 자료 6개를 순서대로 넣으면 K-에듀파인 수납금액과 홈택스·위택스 신고금액이 자동으로 정리됩니다.",
@@ -455,7 +467,8 @@
         }
       ],
       "short": "원천세·4대보험",
-      "fileName": "10일_이제_두렵지_않아요.xlsm"
+      "fileName": "10일_이제_두렵지_않아요.xlsm",
+      "area": "세외 · 수납신고"
     }
   ]
 }
