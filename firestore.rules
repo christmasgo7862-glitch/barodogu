@@ -17,6 +17,14 @@ service cloud.firestore {
         && step('views') && step('uses') && step('likes') && step('useful') && step('thanks') && step('favs') && step('shares');
       allow delete: if false;
     }
+    // 지금 접속 중: 익명 번호마다 마지막 신호 시각(t)만 저장
+    match /presence/{pid} {
+      allow read: if true;
+      allow create, update: if pid.matches('^[a-z0-9]{20}$')
+        && request.resource.data.keys().hasOnly(['t'])
+        && request.resource.data.t == request.time;
+      allow delete: if pid.matches('^[a-z0-9]{20}$');
+    }
     match /{document=**} {
       allow read, write: if false;
     }
