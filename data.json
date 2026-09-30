@@ -1,18 +1,18 @@
 {
   "site": {
     "url": "https://christmasgo7862-glitch.github.io/barodogu/",
-    "version": "2.6",
+    "version": "2.7",
     "updated": "2026.09.28"
   },
   "counter": {
-    "projectId": "",
-    "apiKey": ""
+    "projectId": "barodogu-eaa32",
+    "apiKey": "AIzaSyCvpFxwwof5Bnc0uBrPylEZ1T6p0LvlQWg"
   },
   "news": [
     {
       "date": "2026.09.30",
-      "title": "실시간 이용 현황 추가",
-      "text": "지금 접속 중인 사람 수, 오늘·누적 방문, 바로 쓰기·다운로드·받은 반응 수가 25초마다 자동으로 새로 표시됩니다."
+      "title": "실시간 이용 현황 시작",
+      "text": "지금 접속 중인 사람 수, 오늘·누적 방문, 바로 쓰기·다운로드·받은 반응 수가 실시간으로 표시됩니다."
     },
     {
       "date": "2026.09.28",
