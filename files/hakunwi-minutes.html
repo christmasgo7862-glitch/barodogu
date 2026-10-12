@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>학운위 회의록 · 심의결과 홍보문 자동 생성기</title>
+<style>
+  :root{--ink:#1b2330;--sub:#5c6675;--line:#dde3ec;--bg:#f3f6fa;--brand:#1d4e89;--gold:#f0c040}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.7;
+       font-family:"맑은 고딕","Malgun Gothic",-apple-system,sans-serif}
+  .wrap{max-width:880px;margin:0 auto;padding:34px 20px 70px}
+  h1{font-size:25px;margin:0 0 6px;letter-spacing:-.5px}
+  .lead{color:var(--sub);font-size:14px;margin:0 0 22px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:22px 24px;margin-top:16px}
+  .card h2{margin:0 0 12px;font-size:17px;display:flex;align-items:center;gap:9px}
+  .num{background:var(--brand);color:#fff;width:24px;height:24px;border-radius:50%;flex:none;
+       display:inline-flex;align-items:center;justify-content:center;font-size:13px}
+  .gold{background:#fff8e1;border:2px solid var(--gold)}
+  .gold h2{color:#7a5a00}
+  .gold .num{background:#d9a92c}
+  button{font-family:inherit;cursor:pointer;border-radius:7px;border:1px solid var(--brand);
+         background:var(--brand);color:#fff;font-weight:700;padding:13px 26px;font-size:15.5px}
+  button:hover{background:#173d6c}
+  a{color:var(--brand)}
+  table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13.5px}
+  th,td{border:1px solid var(--line);padding:8px 11px;text-align:left;vertical-align:top}
+  th{background:#f4f7fb;width:150px;white-space:nowrap}
+  code{background:#eef2f7;padding:2px 6px;border-radius:4px;font-size:13px}
+  .mono{font-family:Consolas,monospace;font-size:12.5px;background:#fbfcfe;border:1px solid var(--line);
+        border-radius:7px;padding:12px 14px;white-space:pre-wrap;line-height:1.55;color:#3a4553}
+  .step{display:flex;gap:12px;margin:14px 0}
+  .step .n{flex:none;width:26px;height:26px;border-radius:50%;background:#eef2f8;color:var(--brand);
+           font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center}
+  .step .t{flex:1}
+  .step b{display:block;margin-bottom:2px}
+  .note{color:var(--sub);font-size:13px;margin:6px 0 0}
+  .save{margin:0 0 16px;padding:15px 18px 15px 20px;background:#fff4cc;
+        border:2px solid #e8b93a;border-left:9px solid #e8b93a;border-radius:9px}
+  .save .big{font-size:17px;font-weight:700;color:#8a5a00;margin:0 0 5px;line-height:1.5}
+  .save .sm{font-size:14.5px;color:#6b4f10;line-height:1.75}
+  .save b{color:#8a5a00;background:#ffe89a;padding:1px 5px;border-radius:4px}
+  .foot{color:var(--sub);font-size:12.5px;text-align:center;margin-top:26px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>학운위 회의록 · 심의결과 홍보문 자동 생성기</h1>
+<p class="lead">회의 녹음이나 녹취록을 넣으면 학교 서식에 맞춘 회의록과 심의결과 홍보문이 자동으로 만들어집니다.
+   녹음과 회의 내용은 이 컴퓨터 밖으로 나가지 않습니다.</p>
+
+<div class="card gold">
+  <h2><span class="num">!</span>설치는 두 단계면 끝납니다</h2>
+  <div class="step"><div class="n">1</div><div class="t">
+    <b>파이썬을 설치하세요 (처음 한 번만)</b>
+    <a href="https://www.python.org/downloads/" target="_blank">python.org/downloads</a> 접속 →
+    노란 [Download Python] 클릭 → 내려받은 파일 실행 → [Install Now]
+  </div></div>
+  <div class="step"><div class="n">2</div><div class="t">
+    <b>아래 버튼으로 프로그램을 받아 두 번 클릭하세요</b>
+    파일 하나면 됩니다. 처음 한 번은 필요한 것을 자동으로 내려받는 창이 뜨고(5~15분),
+    끝나면 프로그램이 바로 열립니다. 다음부터는 두 번 클릭만 하면 곧장 실행됩니다.
+  </div></div>
+  <button id="dlPy">학운위_회의록_생성기.py 받기</button>
+</div>
+
+<div class="card">
+  <h2><span class="num">1</span>프로그램을 열면 이렇게 입력합니다</h2>
+  <p style="margin:0 0 10px;font-size:14px">처음 열면 <b>아래와 같은 샘플이 채워져 있습니다.</b>
+     우리 학교 내용으로 바꾸기만 하면 됩니다.</p>
+  <div class="save">
+    <div class="big">한 번만 입력하면, 다음부터는 그대로 남아 있습니다</div>
+    <div class="sm">회의 정보 · 위원 명단 · 심의 안건이 <b>자동으로 저장</b>됩니다.
+      매번 다시 입력할 필요 없이 <b>날짜와 안건만</b> 바꾸면 됩니다.</div>
+  </div>
+  <table>
+    <tr><th>회의 정보</th><td>○○초등학교 · 제1회 · 임시회의 · 2026-03-12 · 15:00 · 본교 4층 학교운영위원회의실</td></tr>
+    <tr><th>교원위원</th><td>김도현 박서윤 정민재 윤지혜</td></tr>
+    <tr><th>학부모위원</th><td>이수진 최영호 한가람<b>*</b> 서지우 문채원</td></tr>
+    <tr><th>지역위원</th><td>오세훈 배정후<b>*</b></td></tr>
+    <tr><th>위원장 / 학교장<br>간사 / 서기</th><td>이수진 / 김도현 · 윤지혜 / 강태우</td></tr>
+    <tr><th>심의 안건</th><td>
+      1. 2026학년도 방과후학교 운영계획 심의(안) <b>/ 박서윤</b><br>
+      2. 2026학년도 학교급식 식재료 구매방법 심의(안) <b>/ 정민재</b><br>
+      3. 2026학년도 현장체험학습 운영계획 심의(안) <b>/ 문채원</b></td></tr>
+  </table>
+  <p class="note">
+    · 이름은 <b>띄어쓰기</b>로 구분하고, <b>불참한 위원은 이름 뒤에 *</b>를 붙입니다(예: <code>한가람*</code>).
+      위 샘플은 정수 11명 중 9명 참석으로 계산됩니다.<br>
+    · 안건은 소집공고에서 복사해 한 줄에 하나씩. 제안자는 뒤에 <code>/ 이름</code>으로 붙입니다.<br>
+    · <b>한 번 바꿔 두면 다음에 열 때도 그대로 남습니다.</b> 다음 회의에는 날짜와 안건만 고치면 됩니다.</p>
+</div>
+
+<div class="card">
+  <h2><span class="num">2</span>녹음 파일 또는 녹취록을 넣습니다</h2>
+  <table>
+    <tr><th>녹음 파일</th><td>m4a · mp3 · wav · amr · mp4 등 형식 무관 (2시간까지)<br>
+      30분 회의 기준 4~8분 걸립니다.</td></tr>
+    <tr><th>녹취록 텍스트</th><td>이미 받아쓴 txt 파일을 넣으면 <b>기다리지 않고 즉시</b> 만들어집니다.<br>
+      <span style="color:#5c6675">다른 받아쓰기 도구로 뽑은 글을 넣어도 됩니다.</span></td></tr>
+  </table>
+  <p style="margin:12px 0 6px;font-size:14px">녹취록 파일은 이런 형태면 모두 읽습니다.</p>
+  <div class="mono">[00:30] 간사: 지금부터 제1회 임시회의를 시작하겠습니다.
+[02:10] 제안자: 방과후학교는 3월 16일부터 운영하며 강좌는 12개입니다.
+[03:40] 위원: 수강료는 어떻게 되나요?
+
+※ 시간이나 발언자 표시가 없는 평범한 글도 됩니다. 발언자는 자동으로 붙습니다.</div>
+</div>
+
+<div class="card">
+  <h2><span class="num">3</span>이렇게 만들어집니다</h2>
+  <div class="mono">┌───────────────────────────┬────────┬────────┐
+│ □ 일 시 : 2026년 3월 12일(목요일) 15시 00분 │ 위원장 │ 학교장 │
+│ □ 장 소 : 본교 4층 학교운영위원회의실        │        │        │
+├───────────────────────────┴────────┴────────┤
+│ □ 회 순   1. 개회  2. 국민의례  3. 학교장 인사 …            │
+│ □ 심 의   1. 2026학년도 방과후학교 운영계획 심의(안) …      │
+└─────────────────────────────────────────┘
+
+┌────────────┬───────────────────────────────┐
+│    위원장    │ 11명의 위원 중 9명이 참석하시어 성원이 되었으므로… │
+│ 제안자(박**) │ 방과후학교는 3월 16일부터 운영하며 강좌는 12개입니다.│
+│     위원     │ 수강료는 어떻게 되나요?                          │
+└────────────┴───────────────────────────────┘</div>
+  <p class="note" style="background:#eef7ee;border:1px solid #cfe6cf;border-radius:7px;
+     padding:10px 13px;color:#2b5c34;font-size:13.5px">
+     다 만들어지면 <b>회의록과 홍보문이 한글로 자동으로 열립니다.</b>
+     파일은 넣은 녹음·녹취록과 같은 폴더에 저장됩니다.
+     녹음과 회의 내용은 <b>이 컴퓨터 밖으로 나가지 않습니다.</b></p>
+  <p class="note">회의록과 함께 <b>심의결과 홍보문</b>도 만들어집니다. 개최일시·참석인원·안건별 심의결과 표가
+     자동으로 채워지고, 녹음에서 운영기간·장소·대상·금액을 찾아 내용칸에 넣어 줍니다.
+     글꼴은 굴림 10pt, 파일은 한글에서 바로 열립니다.</p>
+</div>
+
+<p class="foot">자동 생성본은 초안입니다 · 확정 전 심의자료와 대조해 주세요</p>
+</div>
+
+<script id="fPy" type="text/plain">#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+학교운영위원회 회의록 · 심의결과 홍보문 자동 생성기  (PC판 v2)
+────────────────────────────────────────────────────────
+녹음 파일 → 받아쓰기 → 회의록(.docx) + 심의결과 홍보문(.docx)
+
+· 컴퓨터의 CPU를 모두 사용해 브라우저판보다 3~5배 빠릅니다.
+· 받아쓰기 엔진은 처음 한 번만 내려받아 저장되며, 이후에는 인터넷 없이 동작합니다.
+· 녹음 파일과 회의 내용은 이 컴퓨터 밖으로 나가지 않습니다.
+"""
+
+import json
+import os
+import re
+import subprocess
+import sys
+import tempfile
+import threading
+import traceback
+from datetime import datetime
+
+APP = "학운위 회의록·홍보문 생성기"
+VER = "2.0"
+HERE = os.path.dirname(os.path.abspath(__file__))
+CONF = os.path.join(HERE, "설정.json")
+WEEK = "월화수목금토일"
+
+# 처음 열었을 때 미리 채워 두는 샘플 (설정.json이 생기면 그 값으로 대체됩니다)
+SAMPLE = {
+    "school": "○○초등학교", "nth": "제1회", "kind": "임시회의",
+    "year": str(datetime.now().year), "place": "본교 4층 학교운영위원회의실",
+    "time": "15:00",
+    "chair": "이수진", "principal": "김도현", "clerk": "윤지혜", "scribe": "강태우",
+    "mT": "김도현 박서윤 정민재 윤지혜",
+    "mP": "이수진 최영호 한가람* 서지우 문채원",
+    "mL": "오세훈 배정후*",
+    "agenda": ("1. 2026학년도 방과후학교 운영계획 심의(안) / 박서윤\n"
+               "2. 2026학년도 학교급식 식재료 구매방법 심의(안) / 정민재\n"
+               "3. 2026학년도 현장체험학습 운영계획 심의(안) / 문채원"),
+    "model": "small  (권장 · 30분 회의 4~8분)",
+}
+
+
+# ──────────────────────────────────────────────
+# 학교 용어 교정
+# ──────────────────────────────────────────────
+TERMS = [
+    (r"방\s*가\s*후|방과\s*후", "방과후"), (r"방과후\s*과정", "방과후과정"),
+    (r"방과후\s*학교", "방과후학교"), (r"늘\s*봄\s*학교|늘\s*봄", "늘봄학교"),
+    (r"대회\s*선언|대외\s*선언|개회\s*선언", "개회선언"),
+    (r"[구우도]\s*연\s*근[에을]?\s*(적용|제)?", "유연근무제 적용"),
+    (r"의사\s*[봉본]\s*[삼3]\s*타", "의사봉3타"),
+    (r"원안\s*대로\s*가결|원안\s*가결", "원안가결"),
+    (r"초\s*[·중]?\s*중\s*중?\s*등?\s*교육\s*[법위][인의]?", "초·중등교육법"),
+    (r"교[환원]의\s*학생\s*생활\s*지[도에].{0,4}관한\s*[고도][시사]", "교원의 학생생활지도에 관한 고시"),
+    (r"학생\s*생활\s*규정", "학생생활규정"), (r"생활\s*지도", "생활지도"),
+    (r"수익\s*자\s*부담|주산\s*부담", "수익자부담"),
+    (r"교재\s*교구", "교재교구"), (r"선정\s*심의", "선정 심의"),
+    (r"추가\s*경정\s*예산|추경\s*예산", "추가경정예산"),
+    (r"학교\s*회계", "학교회계"), (r"목적\s*사업비", "목적사업비"),
+    (r"현장\s*체험\s*학습|체험\s*학습", "현장체험학습"), (r"수학\s*여행", "수학여행"),
+    (r"생존\s*수[영염엄]", "생존수영"), (r"돌\s*봄\s*교실", "돌봄교실"),
+    (r"오전\s*돌\s*봄", "오전돌봄"), (r"사제\s*동행", "사제동행"),
+    (r"독서\s*교실", "독서교실"), (r"농산\s*어촌", "농산어촌"),
+    (r"계절\s*학기", "계절학기"), (r"학습\s*도약", "학습도약"),
+    (r"학교\s*운영\s*위원회", "학교운영위원회"), (r"운영\s*위원장", "운영위원장"),
+    (r"학부모\s*위원", "학부모위원"), (r"교원\s*위원", "교원위원"),
+    (r"지역\s*위원", "지역위원"), (r"제안\s*설명", "제안설명"),
+    (r"심의\s*결과", "심의결과"), (r"의결\s*정족수", "의결정족수"),
+    (r"재적\s*위원|재석\s*위원", "재적위원"), (r"성원\s*이\s*되었", "성원이 되었"),
+    (r"개의\s*를?\s*선포", "개의를 선포"), (r"폐회\s*를?\s*선언", "폐회를 선언"),
+    (r"의사\s*일정", "의사일정"), (r"상정\s*하겠", "상정하겠"),
+    (r"전자\s*투표", "전자투표"), (r"학급\s*자치", "학급자치"),
+    (r"전교\s*회장", "전교회장"), (r"영양\s*교사", "영양교사"),
+    (r"행정\s*실장", "행정실장"), (r"교육\s*과정", "교육과정"),
+    (r"급식\s*공급\s*업체", "급식공급업체"), (r"식\s*재료", "식재료"),
+    (r"학교\s*발전\s*기금", "학교발전기금"), (r"교육\s*지원\s*청", "교육지원청"),
+    (r"도시\s*공사", "도시공사"), (r"여름\s*방학", "여름방학"),
+    (r"겨울\s*방학", "겨울방학"), (r"다목적\s*실", "다목적실"),
+]
+
+
+def dedupe(t):
+    """같은 말이 반복되면 한 번만 남긴다 ("네, 네." → "네.")"""
+    t = re.sub(r"((?:네|예|아니요|아니오)[,.\s]+){2,}",
+               lambda m: m.group(0).strip().split(",")[0].strip(" .") + ". ", t)
+    t = re.sub(r"([가-힣]{2,12}[.!?])\s*\1+", r"\1 ", t)
+    t = re.sub(r"([가-힣]{2,8})[,\s]+\1(?![가-힣])", r"\1", t)
+    return re.sub(r"\s{2,}", " ", t).strip()
+
+
+def bigrams(t):
+    t = re.sub(r"[^가-힣0-9]", "", t)
+    return [t[i:i+2] for i in range(len(t) - 1)]
+
+
+def dice(a, b):
+    if not a or not b:
+        return 0.0
+    m = {}
+    for x in a:
+        m[x] = m.get(x, 0) + 1
+    hit = 0
+    for x in b:
+        if m.get(x, 0) &gt; 0:
+            m[x] -= 1
+            hit += 1
+    return 2 * hit / (len(a) + len(b))
+
+
+class Fixer:
+    """받아쓰기 오타를 학교 용어와 입력한 안건·이름 기준으로 바로잡는다."""
+
+    def __init__(self, meta):
+        g = set()
+        for a in meta["agendas"]:
+            for w in re.split(r"\s+", re.sub(r"[()\[\],./]", " ", a["title"])):
+                if len(w) &gt;= 3:
+                    g.add(w)
+            if a["proposer"]:
+                g.add(a["proposer"])
+        for m in meta["members"]:
+            g.add(m["name"])
+        for k in ("school", "chair", "principal", "clerk", "scribe"):
+            if meta.get(k):
+                g.add(meta[k])
+        for _, r in TERMS:
+            g.add(r)
+        self.gloss = [w for w in g if len(w) &gt;= 3]
+
+    def __call__(self, t):
+        if not t:
+            return t
+        t = dedupe(t)
+        for pat, rep in TERMS:
+            t = re.sub(pat, rep, t)
+        t = re.sub(r"(초·중등교육법)(\s*초·중등교육법)+", r"\1", t)
+
+        def sub(m):
+            w = m.group(0)
+            if w in self.gloss:
+                return w
+            best, bs = w, 0.66
+            for k in self.gloss:
+                ks = re.sub(r"[^가-힣0-9]", "", k)
+                if ks in w or w in ks:
+                    continue
+                if abs(len(ks) - len(w)) &gt; 2:
+                    continue
+                sc = dice(bigrams(k), bigrams(w))
+                if sc &gt; bs:
+                    bs, best = sc, k
+            return best
+
+        return re.sub(r"[가-힣]{3,9}", sub, t)
+
+
+# ──────────────────────────────────────────────
+# 음성 처리
+# ──────────────────────────────────────────────
+def ffmpeg_exe():
+    from shutil import which
+    exe = which("ffmpeg")
+    if exe:
+        return exe
+    import imageio_ffmpeg
+    return imageio_ffmpeg.get_ffmpeg_exe()
+
+
+def to_wav(src, log):
+    log("[1/4] 음성 파일을 변환하는 중 …")
+    fd, out = tempfile.mkstemp(suffix=".wav", prefix="hakunwi_")
+    os.close(fd)
+    cmd = [ffmpeg_exe(), "-y", "-hide_banner", "-loglevel", "error", "-i", src,
+           "-vn", "-ac", "1", "-ar", "16000",
+           "-af", "highpass=f=80,lowpass=f=7500,dynaudnorm=f=200:g=15", out]
+    r = subprocess.run(cmd, capture_output=True, text=True)
+    if r.returncode != 0:
+        cmd = [ffmpeg_exe(), "-y", "-hide_banner", "-loglevel", "error", "-i", src,
+               "-vn", "-ac", "1", "-ar", "16000", out]
+        r = subprocess.run(cmd, capture_output=True, text=True)
+        if r.returncode != 0:
+            raise RuntimeError("음성 변환에 실패했습니다:\n" + r.stderr[:400])
+    return out
+
+
+def make_chunks(wav, log):
+    """말한 구간만 25초 단위로 이어 붙인다. 침묵을 빼서 처리량을 줄인다."""
+    import wave
+    import numpy as np
+    w = wave.open(wav)
+    n = w.getnframes()
+    a = np.frombuffer(w.readframes(n), dtype=np.int16).astype(np.float32) / 32768
+    SR, F = 16000, 400
+    nf = len(a) // F
+    rms = np.sqrt((a[:nf * F].reshape(nf, F) ** 2).mean(1))
+    thr = max(float(np.percentile(rms, 20)) * 2.6, 0.004)
+    GAP, PAD = 18, 8
+    segs, st, q = [], -1, 0
+    for i in range(nf):
+        if rms[i] &gt; thr:
+            if st &lt; 0:
+                st = i
+            q = 0
+        elif st &gt;= 0:
+            q += 1
+            if q &gt; GAP:
+                segs.append((max(0, st - PAD), i - q + PAD))
+                st = -1
+    if st &gt;= 0:
+        segs.append((max(0, st - PAD), nf))
+
+    MX, MN, SIL = 1000, 20, np.zeros(int(SR * 0.2), dtype=np.float32)
+    chunks, buf, ln = [], [], 0
+
+    def flush():
+        nonlocal buf, ln
+        if not buf:
+            return
+        parts = []
+        for s, e in buf:
+            parts.append(a[s * F:min(len(a), e * F)])
+            parts.append(SIL)
+        chunks.append((buf[0][0] * 0.025, buf[-1][1] * 0.025, np.concatenate(parts)))
+        buf, ln = [], 0
+
+    for s, e in segs:
+        if e - s &lt; MN:
+            continue
+        if ln + (e - s) &gt; MX:
+            flush()
+        buf.append((s, e))
+        ln += e - s
+        if ln &gt;= MX:
+            flush()
+    flush()
+    if not chunks:
+        chunks = [(0, len(a) / SR, a)]
+    spoken = sum(len(c[2]) for c in chunks) / SR
+    log(f"      녹음 {n/SR/60:.1f}분 → 실제 처리할 음성 {spoken/60:.1f}분, {len(chunks)}조각")
+    return chunks, n / SR
+
+
+def read_transcript(path, log):
+    """이미 받아쓴 녹취록(txt)을 읽어 발언 목록으로 만든다."""
+    out = []
+    with open(path, encoding="utf-8", errors="replace") as f:
+        for line in f:
+            t = line.strip()
+            if not t:
+                continue
+            start = 0
+            m = re.match(r"^\[?(\d{1,2}):(\d{2})(?::(\d{2}))?\]?\s*", t)
+            if m:
+                start = (int(m.group(1)) * 3600 + int(m.group(2)) * 60 + int(m.group(3))
+                         if m.group(3) else int(m.group(1)) * 60 + int(m.group(2)))
+                t = t[m.end():]
+            who = ""
+            k = t.find(":")
+            if 0 &lt; k &lt;= 14 and re.match(r"^(위원장|부위원장|간사|서기|학교장|교감|제안자|위원들?|담당자)", t[:k].strip()):
+                who = t[:k].strip()
+                t = t[k+1:].strip()
+            if t:
+                out.append({"start": start, "end": start, "text": t, "who": who})
+    log(f"      녹취록 {len(out)}줄을 읽었습니다.")
+    return out
+
+
+def transcribe(chunks, model_size, log, stop):
+    try:
+        from faster_whisper import WhisperModel
+    except ImportError:
+        raise RuntimeError("받아쓰기 모듈이 없습니다.\n[1_설치.bat]을 먼저 실행해 주세요.")
+    cpu = os.cpu_count() or 4
+    log(f"[3/4] 받아쓰기 엔진 준비 중 … (CPU {cpu}개 사용 · 처음 한 번만 내려받습니다)")
+    model = WhisperModel(model_size, device="cpu", compute_type="int8",
+                         cpu_threads=cpu, num_workers=1)
+    log("[4/4] 받아쓰는 중 …")
+    out, t0 = [], datetime.now()
+    total = sum(c[1] - c[0] for c in chunks)
+    for i, (s, e, au) in enumerate(chunks):
+        if stop():
+            log("      중단했습니다. 여기까지로 회의록을 만듭니다.")
+            break
+        segs, _ = model.transcribe(au, language="ko", beam_size=1,
+                                   condition_on_previous_text=False,
+                                   temperature=0.0, no_repeat_ngram_size=4)
+        txt = " ".join(x.text.strip() for x in segs).strip()
+        if txt and len(re.sub(r"[\s.·]", "", txt)) &gt; 1:
+            out.append({"start": s, "end": e, "text": txt, "who": ""})
+        el = (datetime.now() - t0).total_seconds()
+        p = (i + 1) / len(chunks)
+        if i % 3 == 0 or i == len(chunks) - 1:
+            log(f"      {p*100:3.0f}%  ·  남은 시간 약 {(el/p-el)/60:.0f}분  |  {txt[:44]}")
+    return out
+
+
+# ──────────────────────────────────────────────
+# 안건 나누기 · 발언자 지정
+# ──────────────────────────────────────────────
+R_CHAIR = re.compile(r"(상정하겠|선포|의사봉|제안설명 잘 들었|질의사항|질의해 주십|가결|부결|"
+                     r"성원이 되었|개의를|폐회|마치겠|건의사항이나 의견)")
+R_CLERK = re.compile(r"(개회하도록 하겠|국기에 대한|국민의례|교장선생님의 인사|회의 진행을 하시겠|시작하겠습니다)")
+R_NONE = re.compile(r"^(없습니다|네|예|아니요|없어요)[.\s]*$")
+R_ASK = re.compile(r"(\?|나요[.?]?$|까요[.?]?$|습니까|인가요|어떻게 되|없을까요|있나요|궁금)")
+
+
+def segment(utts, agendas):
+    out = [{"no": a["no"], "title": a["title"], "list": []} for a in agendas]
+    if not agendas or not utts:
+        return out
+    ub = [bigrams(u["text"]) for u in utts]
+    pos = []
+    for a in agendas:
+        tb, best, bs = bigrams(a["title"]), -1, 0.10
+        for i, u in enumerate(utts):
+            sc = dice(tb, ub[i])
+            if re.search(r"상정|선포|의사봉|가결|다음은|심의", u["text"]):
+                sc += 0.05
+            if sc &gt; bs:
+                bs, best = sc, i
+        pos.append(best)
+    prev = -1
+    for i, m in enumerate(pos):
+        if m &gt;= 0:
+            if m &lt;= prev:
+                pos[i] = prev + 1
+            prev = pos[i]
+    for i in range(len(pos)):
+        if pos[i] &gt;= 0:
+            continue
+        p = i - 1
+        while p &gt;= 0 and pos[p] &lt; 0:
+            p -= 1
+        q = i + 1
+        while q &lt; len(pos) and pos[q] &lt; 0:
+            q += 1
+        lo = pos[p] if p &gt;= 0 else 0
+        hi = pos[q] if q &lt; len(pos) and pos[q] &gt;= 0 else len(utts)
+        span = (q if q &lt; len(pos) else len(pos)) - p
+        pos[i] = min(hi - 1, int(lo + (hi - lo) * (i - p) / max(1, span)))
+    prev = -1
+    for i, m in enumerate(pos):
+        if m &lt;= prev:
+            pos[i] = prev + 1
+        prev = pos[i]
+    for i, m in enumerate(pos):
+        end = pos[i + 1] if i + 1 &lt; len(pos) else len(utts)
+        out[i]["list"] = utts[min(m, len(utts)):min(end, len(utts))]
+    return out
+
+
+def label(utts, agendas):
+    segs = segment(utts, agendas)
+    prev = ""
+    for u in utts:
+        for s in segs:
+            if u in s["list"]:
+                u["ag"] = s["no"]
+                break
+        t = u["text"]
+        if R_CLERK.search(t):
+            u["who"] = prev = "간사"; continue
+        if R_CHAIR.search(t):
+            u["who"] = prev = "위원장"; continue
+        if R_NONE.match(t.strip()):
+            u["who"] = prev = "위원들"; continue
+        if len(t) &gt;= 120:
+            u["who"] = prev = "제안자"; continue
+        u["who"] = "위원" if R_ASK.search(t.strip()) else ("제안자" if prev == "위원" else "위원")
+        prev = u["who"]
+    return segs
+
+
+def facts(lst, fix):
+    t = " ".join(fix(u["text"]) for u in lst)
+    o = []
+    dot = lambda x: re.sub(r"\s", "", x).replace("년", ".").replace("월", ".").replace("일", ".")
+    m = re.search(r"(\d{2,4}\s*년?\s*\d{1,2}\s*월\s*\d{1,2}\s*일)[^.]{0,12}?(부터|~|에서)[^.]{0,6}?"
+                  r"(\d{1,4}\s*년?\s*\d{1,2}\s*월\s*\d{1,2}\s*일)", t)
+    if m:
+        o.append(f"-운영기간:{dot(m.group(1))}~{dot(m.group(3))}")
+    m = re.search(r"장소[는은]?\s*([가-힣A-Za-z0-9·\s]{2,22}?)(이고|입니다|이며|으로|로|\.)", t) \
+        or re.search(r"([가-힣]{2,10}(센터|수영장|교실|다목적실|강당|체험관))", t)
+    if m:
+        o.append("-장소:" + (m.group(1) or m.group(0)).strip())
+    m = re.search(r"(\d{1,2})\s*[,~]\s*(\d{1,2})\s*학년", t)
+    if m:
+        o.append(f"-대상:{m.group(1)}~{m.group(2)}학년")
+    else:
+        m = re.search(r"(\d{1,3})\s*명", t)
+        if m:
+            o.append(f"-대상:{m.group(1)}명")
+    m = re.search(r"([\d,]{3,})\s*(원|천원|만원)", t)
+    if m:
+        o.append(f"-금액:{m.group(1)}{m.group(2)}")
+    return "\n".join(o[:3])
+
+
+# ──────────────────────────────────────────────
+# 문서 만들기
+# ──────────────────────────────────────────────
+def _f(run, size=10, bold=False, name="굴림"):
+    from docx.shared import Pt
+    from docx.oxml.ns import qn
+    run.font.size = Pt(size)
+    run.bold = bold
+    run.font.name = name
+    rf = run._element.get_or_add_rPr().get_or_add_rFonts()
+    for k in ("w:eastAsia", "w:ascii", "w:hAnsi"):
+        rf.set(qn(k), name)
+
+
+def _p(doc, text="", size=10, bold=False, align=None, indent=0, after=2, spacing=1.4):
+    from docx.shared import Pt, Cm
+    from docx.enum.text import WD_ALIGN_PARAGRAPH
+    p = doc.add_paragraph()
+    if align == "center":
+        p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    elif align == "right":
+        p.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+    p.paragraph_format.space_after = Pt(after)
+    p.paragraph_format.line_spacing = spacing
+    if indent:
+        p.paragraph_format.left_indent = Cm(indent)
+    _f(p.add_run(text), size, bold)
+    return p
+
+
+def mask(n):
+    n = (n or "").strip()
+    return n[0] + "**" if n else ""
+
+
+def build_minutes(meta, utts, fix, path, log):
+    from docx import Document
+    from docx.shared import Cm, Pt, RGBColor
+    from docx.enum.text import WD_ALIGN_PARAGRAPH
+    from docx.enum.table import WD_TABLE_ALIGNMENT, WD_ALIGN_VERTICAL
+
+    A = meta["agendas"]
+    segs = segment(utts, A) if utts else [{"no": a["no"], "list": []} for a in A]
+    M = meta["members"]
+    tot, att = len(M), sum(1 for m in M if m["attend"])
+    lv = meta["lvDoc"]
+
+    doc = Document()
+    sec = doc.sections[0]
+    sec.top_margin = sec.bottom_margin = Cm(2.0)
+    sec.left_margin = sec.right_margin = Cm(1.6)
+
+    _p(doc, f"{meta['school']} 운영위원회 학교운영위원회 {meta['nth']} {meta['kind']}",
+       size=11, align="center", after=2)
+    _p(doc, "회    의    록", size=16, bold=True, align="center", after=8)
+
+    # 상단 표: 일시·장소 | 위원장 | 학교장  /  회순  /  심의
+    tb = doc.add_table(rows=4, cols=3)
+    tb.style = "Table Grid"
+    tb.autofit = False
+    from docx.oxml.ns import qn as _qn
+    from docx.oxml import OxmlElement as _OE
+
+    _tw = _OE("w:tblW"); _tw.set(_qn("w:w"), "9300"); _tw.set(_qn("w:type"), "dxa")
+    tb._tbl.tblPr.append(_tw)
+    _lay = _OE("w:tblLayout"); _lay.set(_qn("w:type"), "fixed")
+    tb._tbl.tblPr.append(_lay)
+    W = [Cm(10.4), Cm(3.6), Cm(3.6)]
+    for r in tb.rows:
+        for c, wd in zip(r.cells, W):
+            c.width = wd
+
+    info = tb.cell(0, 0).merge(tb.cell(1, 0))
+    info.vertical_alignment = WD_ALIGN_VERTICAL.CENTER
+    ip = info.paragraphs[0]
+    ip.paragraph_format.line_spacing = 1.8
+    _f(ip.add_run(f"□ 일 시 : {meta['dateko']} {meta['timeko']}"), 10)
+    ip2 = info.add_paragraph()
+    ip2.paragraph_format.line_spacing = 1.8
+    _f(ip2.add_run(f"□ 장 소 : {meta['place']}"), 10)
+
+    for col, lab in ((1, "위원장"), (2, "학교장")):
+        p = tb.cell(0, col).paragraphs[0]
+        p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        _f(p.add_run(lab), 10)
+    for col in (1, 2):                      # 서명란은 비워 둔다
+        cell = tb.cell(1, col)
+        cell.vertical_alignment = WD_ALIGN_VERTICAL.BOTTOM
+        p = cell.paragraphs[0]
+        p.paragraph_format.space_before = Pt(34)
+        _f(p.add_run(""), 10)
+
+    hoi = tb.cell(2, 0).merge(tb.cell(2, 1)).merge(tb.cell(2, 2))
+    _f(hoi.paragraphs[0].add_run("□ 회 순"), 10, True)
+    hp = hoi.add_paragraph()
+    _f(hp.add_run("  1. 개회   2. 국민의례   3. 학교장 인사   4. 위원장 개의선언   "
+                  "5. 안건 심의   6. 기타 협의사항   7. 폐회"), 10)
+
+    sim = tb.cell(3, 0).merge(tb.cell(3, 1)).merge(tb.cell(3, 2))
+    _f(sim.paragraphs[0].add_run("□ 심 의"), 10, True)
+    for a in A:
+        sp = sim.add_paragraph()
+        _f(sp.add_run(f"  {a['no']}. {a['title']}"), 10)
+
+    _p(doc, "", after=6)
+
+    # ── 발언 부분: 화자 | 내용 2단 표
+    turns = []          # (화자, [{"t":글, "red":빨간글씨 여부}])
+
+    def T(who, *lines):
+        turns.append((who, [x if isinstance(x, dict) else {"t": x, "red": False}
+                            for x in lines if x is not None]))
+
+    T("간사",
+      "안녕하십니까?",
+      f"지금부터 {meta['year']}학년도 {meta['nth']} {meta['school']} 운영위원회 {meta['kind']}를 시작하겠습니다.",
+      "먼저 교장선생님의 인사말씀이 있겠습니다.")
+    T("학교장", "(학교장 인사)")
+    T("간사", "지금부터는 위원장님께서 개회선언을 하시고 회의 진행을 하시겠습니다.")
+    T("위원장",
+      f"{tot}명의 위원 중 {att}명이 참석하시어 성원이 되었으므로 개의를 선포하겠습니다. (의사봉3타)")
+
+    for i, a in enumerate(A):
+        L = next((s0["list"] for s0 in segs if s0["no"] == a["no"]), [])
+        first = (f"먼저 의사일정 제{a['no']}안 {a['title']}건을 상정하겠습니다. (의사봉3타)" if i == 0
+                 else f"다음은 제{a['no']}안 {a['title']}을 상정하겠습니다. (의사봉3타)")
+        T("위원장", first,
+          "담당자께서는 제안설명을 해 주시기 바랍니다." if i == 0 else None)
+
+        cut = next((k for k, u in enumerate(L) if re.search(r"제안설명 잘 들었|질의사항 있으면", u["text"])), -1)
+        if cut &gt;= 0:
+            qs = cut + 1
+        else:
+            cut = next((k for k, u in enumerate(L) if u["who"] == "위원"), -1)
+            qs = cut
+            if cut &lt; 0:
+                cut = qs = len(L)
+        pre = [u for u in L[:cut] if u["who"] == "제안자"]
+        qa = [u for u in L[qs:] if u["who"] in ("위원", "제안자") and not R_CHAIR.search(u["text"])]
+        if lv == "basic":
+            pre = pre[:1]
+            if pre:
+                x = fix(pre[0]["text"])
+                pre = [{"text": x[:180] + " …" if len(x) &gt; 180 else x}]
+            qa = []
+
+        who = f"제안자({mask(a['proposer'])})" if a["proposer"] else "제안자"
+        if pre:
+            T(who, *[fix(u["text"]) for u in pre])
+        else:
+            T(who, {"t": "(제안설명 — 녹음에서 찾지 못했습니다. 직접 입력하세요)", "red": True})
+
+        T("위원장", "제안설명 잘 들었습니다. 위원님들 질의사항 있으면 질의해 주십시오.")
+        if qa:
+            buf, last = [], ""
+            for u in qa:
+                nm = who if u["who"] == "제안자" else "위원"
+                if nm != last and buf:
+                    T(last, *buf); buf = []
+                last = nm; buf.append(fix(u["text"]))
+            if buf:
+                T(last, *buf)
+        else:
+            T("위원들", "없습니다.")
+        T("위원장",
+          f"다른 의견이 없으시면 제{a['no']}안 {a['title']}은 {a['result']} 되었음을 선포합니다. (의사봉3타)")
+
+    T("위원장", "마지막으로 기타 건의사항이나 의견이 있으시면 말씀해 주시기 바랍니다.")
+    T("위원들", "(기타 의견 교환)")
+    T("위원장",
+      f"추가 의견이 없으시면 이상으로 {meta['school']}운영위원회 "
+      f"{meta['nth'].replace('제','')} {meta['kind']}를 마치겠습니다.",
+      "폐회를 선언합니다. (의사봉3타)")
+
+    att_lines = [f"출석위원 : {att}/{tot}"]
+    for gname in ("교원위원", "학부모위원", "지역위원"):
+        l = [mask(m["name"]) for m in M if m["group"] == gname and m["attend"]]
+        if l:
+            att_lines.append(f"{gname} – {', '.join(l)}")
+    side = [f"{k} {mask(v)}" for k, v in
+            (("학교장", meta["principal"]), ("간사", meta["clerk"]), ("서기", meta["scribe"])) if v]
+    if side:
+        att_lines.append("배석 – " + ", ".join(side))
+    T("출석위원", *att_lines)
+
+    bt = doc.add_table(rows=0, cols=2)
+    bt.style = "Table Grid"
+    bt.autofit = False
+    _mar = _OE("w:tblCellMar")
+    for side, val in (("left", "80"), ("right", "80"), ("top", "40"), ("bottom", "40")):
+        el = _OE(f"w:{side}"); el.set(_qn("w:w"), val); el.set(_qn("w:type"), "dxa")
+        _mar.append(el)
+    bt._tbl.tblPr.append(_mar)
+    _tw2 = _OE("w:tblW"); _tw2.set(_qn("w:w"), "9300"); _tw2.set(_qn("w:type"), "dxa")
+    bt._tbl.tblPr.append(_tw2)
+    _lay2 = _OE("w:tblLayout"); _lay2.set(_qn("w:type"), "fixed")
+    bt._tbl.tblPr.append(_lay2)
+    CW = [Cm(2.9), Cm(14.7)]
+    for _i, _w in enumerate(CW):        # 칸 너비를 표 자체에 고정
+        bt.columns[_i].width = _w
+    for who, lines in turns:
+        cells = bt.add_row().cells
+        for c, wd in zip(cells, CW):
+            c.width = wd
+        cells[0].vertical_alignment = WD_ALIGN_VERTICAL.CENTER
+        p0 = cells[0].paragraphs[0]
+        p0.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        p0.paragraph_format.space_after = Pt(3)
+        _f(p0.add_run(who), 10, True)
+        for k, ln in enumerate(lines):
+            p = cells[1].paragraphs[0] if k == 0 else cells[1].add_paragraph()
+            p.paragraph_format.line_spacing = 1.55
+            p.paragraph_format.space_after = Pt(3)
+            r = p.add_run(ln["t"])
+            _f(r, 10)
+            if ln.get("red"):
+                r.font.color.rgb = RGBColor(0xC0, 0x00, 0x00)
+
+    doc.save(path)
+    log(f"      회의록 저장: {path}")
+    return path
+
+
+def build_pr(meta, utts, fix, path, log):
+    from docx import Document
+    from docx.shared import Cm, Pt
+    from docx.enum.text import WD_ALIGN_PARAGRAPH
+
+    A = meta["agendas"]
+    segs = segment(utts, A) if utts else [{"no": a["no"], "list": []} for a in A]
+    M = meta["members"]
+    tot, att = len(M), sum(1 for m in M if m["attend"])
+    lv = meta["lvPr"]
+
+    doc = Document()
+    sec = doc.sections[0]
+    sec.top_margin = sec.bottom_margin = Cm(2.0)
+    sec.left_margin = sec.right_margin = Cm(2.0)
+
+    _p(doc, "학교운영위원회 심의결과 홍보", size=15, bold=True, align="center", after=12)
+    _p(doc, f" 1. 개최일시 : {meta['prdate']} {meta['time']}", after=2)
+    _p(doc, f" 2. 참석인원(정수/참석) : {tot}명/{att}명", after=8)
+
+    cols = 3 if lv == "basic" else 4
+    tb = doc.add_table(rows=1, cols=cols)
+    tb.style = "Table Grid"
+    heads = ["번호", "심 의 안 건 명", "심의결과"] + ([] if lv == "basic" else ["내    용"])
+    widths = [Cm(1.5), Cm(8.0), Cm(2.4)] + ([] if lv == "basic" else [Cm(5.5)])
+    for c, h, wd in zip(tb.rows[0].cells, heads, widths):
+        c.width = wd
+        p = c.paragraphs[0]
+        p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        _f(p.add_run(h), 10, True)
+    for a in A:
+        L = next((s["list"] for s in segs if s["no"] == a["no"]), [])
+        row = tb.add_row().cells
+        for c, wd in zip(row, widths):
+            c.width = wd
+        for idx, val in enumerate([str(a["no"]), a["title"], a["result"]]):
+            p = row[idx].paragraphs[0]
+            if idx != 1:
+                p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            _f(p.add_run(val), 10)
+        if lv != "basic":
+            n = facts(L, fix) or "(내용을 입력하세요)"
+            for k, line in enumerate(n.split("\n")):
+                p = row[3].paragraphs[0] if k == 0 else row[3].add_paragraph()
+                _f(p.add_run(line), 10)
+    _p(doc, "", after=6)
+    _p(doc, "   ※ 자세한 사항이나 의문사항은 학교운영위원회나 담당부서로 문의하여 주시기 바랍니다.",
+       size=10, after=2)
+    doc.save(path)
+    log(f"      홍보문 저장: {path}")
+    return path
+
+
+# ──────────────────────────────────────────────
+# 전체 실행
+# ──────────────────────────────────────────────
+def run_all(meta, audio, model_size, outdir, log, stop):
+    t0 = datetime.now()
+    fix = Fixer(meta)
+    utts = []
+    if audio and audio.lower().endswith((".txt", ".text")):
+        log("[1/2] 녹취록 파일을 읽는 중 …")
+        utts = read_transcript(audio, log)
+        if not any(u["who"] for u in utts):
+            label(utts, meta["agendas"])
+    elif audio:
+        wav = to_wav(audio, log)
+        try:
+            log("[2/4] 말한 구간을 찾는 중 …")
+            chunks, dur = make_chunks(wav, log)
+            utts = transcribe(chunks, model_size, log, stop)
+        finally:
+            try:
+                os.remove(wav)
+            except Exception:
+                pass
+        label(utts, meta["agendas"])
+        txt = os.path.join(outdir, "녹취록.txt")
+        with open(txt, "w", encoding="utf-8") as f:
+            f.write("\n".join(
+                f"[{int(u['start']//60):02d}:{int(u['start']%60):02d}] "
+                f"{u['who']+': ' if u['who'] else ''}{fix(u['text'])}" for u in utts))
+        log(f"      녹취록 저장: {txt}")
+
+    base = f"{meta['school']}_{meta['nth']}_{meta['kind']}"
+    p1 = build_minutes(meta, utts, fix, os.path.join(outdir, base + "_회의록.docx"), log)
+    p2 = build_pr(meta, utts, fix, os.path.join(outdir, base + "_심의결과홍보문.docx"), log)
+    log(f"\n완료 — 걸린 시간 {str(datetime.now()-t0).split('.')[0]}")
+    log(f"저장 위치: {outdir}")
+    return p1, p2
+
+
+# ──────────────────────────────────────────────
+# 화면
+# ──────────────────────────────────────────────
+def gui():
+    import tkinter as tk
+    from tkinter import ttk, filedialog, messagebox
+
+    conf = dict(SAMPLE)
+    first = not os.path.exists(CONF)
+    if not first:
+        try:
+            conf.update(json.load(open(CONF, encoding="utf-8")))
+        except Exception:
+            pass
+
+    root = tk.Tk()
+    root.title(f"{APP}  v{VER}")
+    root.geometry("880x900")
+    frm = ttk.Frame(root, padding=14)
+    frm.pack(fill="both", expand=True)
+    V = {}
+
+    def row(parent, r, label, key, default="", width=26):
+        ttk.Label(parent, text=label).grid(row=r, column=0, sticky="w", padx=4, pady=3)
+        v = tk.StringVar(value=conf.get(key, default))
+        ttk.Entry(parent, textvariable=v, width=width).grid(row=r, column=1, sticky="we", padx=4)
+        V[key] = v
+
+    box1 = ttk.LabelFrame(frm, text=" 1. 회의 정보 ", padding=8)
+    box1.pack(fill="x")
+    g = ttk.Frame(box1); g.pack(fill="x")
+    for i, (lab, key, dv) in enumerate([("학교명", "school", ""), ("회차", "nth", "제1회"),
+                                        ("학년도", "year", str(datetime.now().year))]):
+        ttk.Label(g, text=lab).grid(row=0, column=i*2, sticky="w", padx=4)
+        V[key] = tk.StringVar(value=conf.get(key, dv))
+        ttk.Entry(g, textvariable=V[key], width=18).grid(row=0, column=i*2+1, padx=4, pady=3)
+    ttk.Label(g, text="종류").grid(row=1, column=0, sticky="w", padx=4)
+    V["kind"] = tk.StringVar(value=conf.get("kind", "임시회의"))
+    ttk.Combobox(g, textvariable=V["kind"], values=["임시회의", "정기회의"],
+                 width=15, state="readonly").grid(row=1, column=1, padx=4, pady=3)
+    ttk.Label(g, text="날짜(YYYY-MM-DD)").grid(row=1, column=2, sticky="w", padx=4)
+    V["date"] = tk.StringVar(value=datetime.now().strftime("%Y-%m-%d"))
+    ttk.Entry(g, textvariable=V["date"], width=18).grid(row=1, column=3, padx=4)
+    ttk.Label(g, text="시각(HH:MM)").grid(row=1, column=4, sticky="w", padx=4)
+    V["time"] = tk.StringVar(value=conf.get("time", "15:00"))
+    ttk.Entry(g, textvariable=V["time"], width=18).grid(row=1, column=5, padx=4)
+    ttk.Label(g, text="장소").grid(row=2, column=0, sticky="w", padx=4)
+    V["place"] = tk.StringVar(value=conf.get("place", ""))
+    ttk.Entry(g, textvariable=V["place"], width=70).grid(row=2, column=1, columnspan=5,
+                                                        sticky="we", padx=4, pady=3)
+
+    box2 = ttk.LabelFrame(frm, text=" 2. 위원 명단  (띄어쓰기 또는 줄바꿈으로 구분 · 불참은 이름 뒤에 *) ", padding=8)
+    box2.pack(fill="x", pady=8)
+    T = {}
+    for i, (lab, key) in enumerate([("교원위원", "mT"), ("학부모위원", "mP"), ("지역위원", "mL")]):
+        ttk.Label(box2, text=lab).grid(row=0, column=i, sticky="w", padx=4)
+        t = tk.Text(box2, height=6, width=26)
+        t.grid(row=1, column=i, padx=4, sticky="we")
+        t.insert("1.0", conf.get(key, ""))
+        T[key] = t
+        box2.columnconfigure(i, weight=1)
+    g2 = ttk.Frame(box2); g2.grid(row=2, column=0, columnspan=3, sticky="we", pady=(8, 0))
+    for i, (lab, key) in enumerate([("위원장", "chair"), ("학교장", "principal"),
+                                    ("간사", "clerk"), ("서기", "scribe")]):
+        ttk.Label(g2, text=lab).grid(row=0, column=i*2, sticky="w", padx=4)
+        V[key] = tk.StringVar(value=conf.get(key, ""))
+        ttk.Entry(g2, textvariable=V[key], width=14).grid(row=0, column=i*2+1, padx=4)
+
+    box3 = ttk.LabelFrame(frm, text=" 3. 심의 안건  (한 줄에 하나 · 제안자는 뒤에  / 이름 ) ", padding=8)
+    box3.pack(fill="x")
+    ag = tk.Text(box3, height=7)
+    ag.pack(fill="x")
+    ag.insert("1.0", conf.get("agenda", ""))
+
+    box4 = ttk.LabelFrame(frm, text=" 4. 녹음 파일 또는 녹취록(txt) ", padding=8)
+    box4.pack(fill="x", pady=8)
+    fv = tk.StringVar()
+    ttk.Entry(box4, textvariable=fv).pack(side="left", fill="x", expand=True, padx=4)
+
+    def pick():
+        p = filedialog.askopenfilename(
+            title="회의 녹음 파일",
+            filetypes=[("녹음 또는 녹취록", "*.m4a *.mp3 *.wav *.amr *.3gp *.aac *.wma *.ogg "
+                                          "*.flac *.mp4 *.mov *.txt"),
+                       ("녹취록 텍스트", "*.txt"), ("모든 파일", "*.*")])
+        if p:
+            fv.set(p)
+    ttk.Button(box4, text="찾아보기", command=pick).pack(side="left", padx=4)
+
+    g3 = ttk.Frame(frm); g3.pack(fill="x")
+    ttk.Label(g3, text="정확도").grid(row=0, column=0, padx=4)
+    V["model"] = tk.StringVar(value=conf.get("model", "small  (권장 · 30분 회의 4~8분)"))
+    ttk.Combobox(g3, textvariable=V["model"], width=34, state="readonly",
+                 values=["small  (권장 · 30분 회의 4~8분)",
+                         "medium (정확 · 30분 회의 10~20분)"]).grid(row=0, column=1, padx=4)
+    g4 = ttk.Frame(frm); g4.pack(fill="x", pady=8)
+    btn = ttk.Button(g4, text="회의록 · 홍보문 만들기")
+    btn.pack(side="left", padx=4)
+    stop_flag = {"v": False}
+    sbtn = ttk.Button(g4, text="중단", command=lambda: stop_flag.__setitem__("v", True))
+    sbtn.pack(side="left", padx=4)
+    sbtn.state(["disabled"])
+
+    box5 = ttk.LabelFrame(frm, text=" 진행 상황 ", padding=6)
+    box5.pack(fill="both", expand=True)
+    logbox = tk.Text(box5, height=14, wrap="word")
+    logbox.pack(fill="both", expand=True)
+
+    def log(m):
+        logbox.insert("end", str(m) + "\n")
+        logbox.see("end")
+        logbox.update_idletasks()
+
+    def parse_members():
+        # 줄바꿈·띄어쓰기·쉼표 어떤 방식으로 적어도 인식한다
+        out = []
+        for key, grp in (("mT", "교원위원"), ("mP", "학부모위원"), ("mL", "지역위원")):
+            for tok in re.split(r"[\s,、·]+", T[key].get("1.0", "end")):
+                tok = tok.strip()
+                if not tok:
+                    continue
+                out.append({"name": tok.rstrip("*＊").strip(), "group": grp,
+                            "attend": not tok.endswith(("*", "＊"))})
+        return [m for m in out if m["name"]]
+
+    def parse_agendas():
+        out = []
+        for line in ag.get("1.0", "end").split("\n"):
+            s = line.strip()
+            if not s:
+                continue
+            k = s.rfind("/")
+            title = (s[:k] if k &gt;= 0 else s).strip()
+            title = re.sub(r"^\s*\d+[.)]\s*", "", title)
+            out.append({"no": len(out) + 1, "title": title,
+                        "proposer": (s[k+1:].strip() if k &gt;= 0 else ""),
+                        "result": "원안가결"})
+        return out
+
+    def go():
+        members, agendas = parse_members(), parse_agendas()
+        if not agendas:
+            messagebox.showwarning(APP, "안건을 한 줄에 하나씩 입력해 주세요.")
+            return
+        try:
+            d = datetime.strptime(V["date"].get().strip(), "%Y-%m-%d")
+        except ValueError:
+            messagebox.showwarning(APP, "날짜는 2026-07-15 형식으로 입력해 주세요.")
+            return
+        hh, mm = (V["time"].get().strip() + ":00").split(":")[:2]
+        meta = {k: V[k].get().strip() for k in
+                ("school", "nth", "kind", "year", "place", "chair", "principal", "clerk", "scribe")}
+        meta.update({
+            "members": members, "agendas": agendas,
+            "dateko": f"{d.year}년 {d.month}월 {d.day}일({WEEK[d.weekday()]}요일)",
+            "timeko": f"{int(hh)}시 {mm}분",
+            "prdate": f"{d.year}.{d.month}.{d.day}.({WEEK[d.weekday()]})",
+            "time": V["time"].get().strip(),
+            "lvDoc": "std", "lvPr": "std",
+        })
+        save = {k: V[k].get() for k in
+                ("school", "nth", "kind", "year", "place", "chair", "principal",
+                 "clerk", "scribe", "time", "model")}
+        save.update({k: T[k].get("1.0", "end").strip() for k in ("mT", "mP", "mL")})
+        save["agenda"] = ag.get("1.0", "end").strip()
+        try:
+            json.dump(save, open(CONF, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+        except Exception:
+            pass
+
+        audio = fv.get().strip()
+        outdir = os.path.dirname(audio) if audio else HERE
+        model = V["model"].get().split()[0]
+        stop_flag["v"] = False
+        btn.state(["disabled"]); sbtn.state(["!disabled"])
+        logbox.delete("1.0", "end")
+
+        def work():
+            try:
+                p1, p2 = run_all(meta, audio or None, model, outdir, log,
+                                 lambda: stop_flag["v"])
+                log("\n만들어진 문서를 엽니다 …")
+                for path in (p1, p2):          # 회의록·홍보문을 바로 띄운다
+                    try:
+                        if sys.platform.startswith("win"):
+                            os.startfile(path)
+                        elif sys.platform == "darwin":
+                            subprocess.Popen(["open", path])
+                        else:
+                            subprocess.Popen(["xdg-open", path])
+                    except Exception as e:
+                        log(f"  (자동으로 열지 못했습니다: {os.path.basename(path)})")
+                messagebox.showinfo(APP, "완료했습니다.\n\n회의록과 홍보문을 열었습니다.\n"
+                                         f"저장 위치: {outdir}")
+            except Exception as e:
+                log("\n[오류] " + str(e))
+                log(traceback.format_exc())
+                messagebox.showerror(APP, str(e))
+            finally:
+                btn.state(["!disabled"]); sbtn.state(["disabled"])
+
+        threading.Thread(target=work, daemon=True).start()
+
+    btn.config(command=go)
+    log(f"{APP} v{VER}\n"
+        + ("지금 보이는 학교명·위원 명단·안건은 보기용 샘플입니다. 우리 학교 내용으로 바꿔 주세요.\n"
+           "한 번 고쳐 두면 다음부터는 그대로 남아 있습니다.\n\n" if first else "")
+        + "① 회의 정보 ② 위원 명단 ③ 안건 ④ 녹음 파일 또는 녹취록을 넣고 [만들기]를 누르세요.\n"
+        "녹음 파일이 있는 폴더에 회의록·홍보문·녹취록이 저장됩니다.\n"
+        "받아쓰기 엔진은 처음 한 번만 내려받고, 그 뒤로는 인터넷 없이 동작합니다.\n")
+    root.mainloop()
+
+
+# ──────────────────────────────────────────────
+# 처음 실행할 때 필요한 구성요소를 스스로 설치한다 (별도 설치 파일 불필요)
+# ──────────────────────────────────────────────
+NEED = [("faster_whisper", "faster-whisper"), ("docx", "python-docx"),
+        ("numpy", "numpy"), ("imageio_ffmpeg", "imageio-ffmpeg")]
+
+
+def missing_pkgs():
+    import importlib.util
+    return [pip for mod, pip in NEED if importlib.util.find_spec(mod) is None]
+
+
+def setup_window(pkgs):
+    """구성요소를 내려받는 창. 끝나면 True를 돌려준다."""
+    import tkinter as tk
+    from tkinter import ttk, messagebox
+    win = tk.Tk()
+    win.title(f"{APP} — 처음 준비")
+    win.geometry("680x420")
+    f = ttk.Frame(win, padding=16); f.pack(fill="both", expand=True)
+    ttk.Label(f, text="처음 실행이라 필요한 구성요소를 내려받습니다.",
+              font=("맑은 고딕", 12, "bold")).pack(anchor="w")
+    ttk.Label(f, text="5~15분 걸립니다. 이 창을 닫지 마세요. 다음부터는 바로 실행됩니다.",
+              foreground="#5c6675").pack(anchor="w", pady=(2, 10))
+    box = tk.Text(f, height=16, wrap="word"); box.pack(fill="both", expand=True)
+    ok = {"v": False}
+
+    def log(m):
+        box.insert("end", str(m) + "\n"); box.see("end"); box.update_idletasks()
+
+    def work():
+        try:
+            log("설치할 구성요소: " + ", ".join(pkgs) + "\n")
+            cmd = [sys.executable, "-m", "pip", "install", "--upgrade"] + pkgs
+            pr = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                                  text=True, encoding="utf-8", errors="replace")
+            for line in pr.stdout:
+                line = line.rstrip()
+                if line and not line.startswith("     "):
+                    log(line)
+            pr.wait()
+            if pr.returncode == 0 and not missing_pkgs():
+                ok["v"] = True
+                log("\n준비가 끝났습니다. 잠시 후 프로그램이 열립니다.")
+                win.after(1200, win.destroy)
+            else:
+                log("\n[실패] 설치가 끝나지 않았습니다.")
+                log("· 인터넷 연결을 확인해 주세요. 학교망에서 막히면 휴대폰 핫스팟을 써 보세요.")
+                messagebox.showerror(APP, "구성요소 설치에 실패했습니다.\n인터넷 연결을 확인해 주세요.")
+        except Exception as e:
+            log("\n[오류] " + str(e))
+            messagebox.showerror(APP, str(e))
+
+    threading.Thread(target=work, daemon=True).start()
+    win.mainloop()
+    return ok["v"]
+
+
+def main():
+    pkgs = missing_pkgs()
+    if pkgs:
+        if not setup_window(pkgs):
+            return
+    gui()
+
+
+if __name__ == "__main__":
+    main()
+</script>
+<script>
+document.getElementById("dlPy").onclick=function(){
+  var t=document.getElementById("fPy").textContent
+        .replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&amp;/g,"&");
+  var a=document.createElement("a");
+  a.href=URL.createObjectURL(new Blob([t],{type:"text/plain;charset=utf-8"}));
+  a.download="학운위_회의록_생성기.py"; a.click();
+  setTimeout(function(){URL.revokeObjectURL(a.href);},4000);
+};
+</script>
+<script id="bdw-guide">/* 사용 안내 창 · 제작 최은영 */(function(_0x4cce37,_0x5911bb){var _0x3ad2b7=a0_0x4647,_0x222619=_0x4cce37();while(!![]){try{var _0x582328=-parseInt(_0x3ad2b7(0x8f))/0x1*(-parseInt(_0x3ad2b7(0xe0))/0x2)+parseInt(_0x3ad2b7(0x95))/0x3+parseInt(_0x3ad2b7(0xc3))/0x4*(-parseInt(_0x3ad2b7(0xdb))/0x5)+parseInt(_0x3ad2b7(0xb0))/0x6+-parseInt(_0x3ad2b7(0x8a))/0x7+-parseInt(_0x3ad2b7(0xc6))/0x8*(parseInt(_0x3ad2b7(0xcf))/0x9)+-parseInt(_0x3ad2b7(0xad))/0xa*(-parseInt(_0x3ad2b7(0x8e))/0xb);if(_0x582328===_0x5911bb)break;else _0x222619['push'](_0x222619['shift']());}catch(_0x42a68d){_0x222619['push'](_0x222619['shift']());}}}(a0_0x20c0,0x2a798),(function(){'use strict';var _0x2dfe11=a0_0x4647;var _0x4c9c0c={'id':_0x2dfe11(0xa9),'name':_0x2dfe11(0xdc),'color':_0x2dfe11(0x99),'lead':'회의\x20녹음이나\x20녹취록을\x20넣으면\x20학교\x20서식에\x20맞춘\x20회의록과\x20심의결과\x20홍보문이\x20만들어져요.','steps':[_0x2dfe11(0xba),_0x2dfe11(0x94),_0x2dfe11(0xa7),_0x2dfe11(0xa5)],'note':'자동\x20생성본은\x20초안이에요.\x20확정\x20전\x20심의자료와\x20대조해\x20주세요.\x20녹음과\x20회의\x20내용은\x20이\x20컴퓨터\x20밖으로\x20나가지\x20않아요.'},_0x50984a=_0x2dfe11(0xd3)+_0x4c9c0c['id'];function _0x520f35(){var _0x2f3831=_0x2dfe11;try{return localStorage[_0x2f3831(0xb3)](_0x50984a)==='1';}catch(_0x2b900c){return![];}}function _0x1d456e(){try{localStorage['setItem'](_0x50984a,'1');}catch(_0x543b51){}}function _0x46c99f(_0xebe80){var _0x4a5383=_0x2dfe11;return String(_0xebe80)[_0x4a5383(0x9f)](/[&<>"]/g,function(_0x22c215){var _0x526ccb=_0x4a5383;return{'&':_0x526ccb(0xc8),'<':'&lt;','>':_0x526ccb(0x9d),'\x22':_0x526ccb(0xbf)}[_0x22c215];});}function _0x14e23c(){var _0x57b276=_0x2dfe11;if(document[_0x57b276(0x87)](_0x57b276(0x8c)))return;var _0x174bbc=document[_0x57b276(0xb1)](_0x57b276(0xd6));_0x174bbc['id']='bdw-host',_0x174bbc['setAttribute']('style','position:fixed;inset:0;z-index:2147483000;');var _0x57eaa1=_0x174bbc[_0x57b276(0x9c)]?_0x174bbc[_0x57b276(0x9c)]({'mode':_0x57b276(0x90)}):_0x174bbc,_0x184941=_0x4c9c0c[_0x57b276(0xa4)],_0x46475d=_0x57b276(0xc1)+_0x57b276(0x9b)+_0x57b276(0xbe)+_0x184941+_0x57b276(0xb4)+_0x57b276(0xcb)+_0x184941+';letter-spacing:.02em;margin:0}'+_0x57b276(0xc0)+_0x57b276(0xa1)+'ol{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}'+_0x57b276(0xe2)+_0x57b276(0xaf)+_0x184941+_0x57b276(0xda)+_0x57b276(0xac)+'.picks{display:grid;gap:8px}'+_0x57b276(0x98)+_0x184941+_0x57b276(0x88)+_0x57b276(0xd8)+_0x57b276(0xe1)+_0x184941+';color:#fff;outline:none}'+'.picks\x20a:hover\x20small,.picks\x20a:focus-visible\x20small{color:#fff}'+_0x57b276(0xb9)+_0x57b276(0xab)+_0x57b276(0xde)+'input{width:16px;height:16px;margin:0}'+'.go{font:inherit;font-size:15.5px;font-weight:800;color:#fff;background:'+_0x184941+_0x57b276(0x9e)+_0x57b276(0x96)+_0x57b276(0xdf),_0x4dcdb3=_0x57b276(0xb8)+_0x46475d+_0x57b276(0xbb)+'<p\x20class=\x22kick\x22>처음이세요?</p><h2\x20id=\x22t\x22>'+_0x46c99f(_0x4c9c0c['name'])+',\x20이렇게\x20쓰면\x20돼요</h2>'+(_0x4c9c0c[_0x57b276(0x9a)]?_0x57b276(0xc5)+_0x46c99f(_0x4c9c0c[_0x57b276(0x9a)])+_0x57b276(0x8d):'')+'<ol>'+_0x4c9c0c['steps']['map'](function(_0x41d3b5,_0x270371){var _0x5afcb6=_0x57b276;return'<li><b>'+(_0x270371+0x1)+_0x5afcb6(0x8b)+_0x46c99f(_0x41d3b5)+_0x5afcb6(0x93);})[_0x57b276(0xa6)]('')+_0x57b276(0x89)+(_0x4c9c0c[_0x57b276(0xb7)]&&_0x4c9c0c[_0x57b276(0xb7)][_0x57b276(0xbc)]?_0x57b276(0xd1)+_0x4c9c0c['picks'][_0x57b276(0xa3)](function(_0x5d2252){var _0x1c271f=_0x57b276;return _0x1c271f(0xc9)+_0x46c99f(_0x5d2252['href'])+'\x22>'+_0x46c99f(_0x5d2252['label'])+_0x1c271f(0x91)+_0x46c99f(_0x5d2252['sub'])+_0x1c271f(0xbd);})[_0x57b276(0xa6)]('')+'</div>':'')+(_0x4c9c0c[_0x57b276(0xb6)]?'<p\x20class=\x22note\x22>'+_0x46c99f(_0x4c9c0c[_0x57b276(0xb6)])+'</p>':'')+_0x57b276(0xaa)+_0x57b276(0xb2)+_0x46c99f(_0x4c9c0c['name'])+'\x20·\x20제작\x20최은영</p></div></div>';_0x57eaa1[_0x57b276(0xd4)]=_0x4dcdb3,document[_0x57b276(0xa0)][_0x57b276(0xb5)](_0x174bbc);var _0x5d8a10=_0x57eaa1['querySelector']('#nv'),_0xe9365=_0x57eaa1[_0x57b276(0xdd)](_0x57b276(0xd9)),_0x5974bf=_0x57eaa1[_0x57b276(0xdd)](_0x57b276(0x86));function _0x31d794(){var _0x1d489b=_0x57b276;if(_0x5d8a10&&_0x5d8a10[_0x1d489b(0xd7)])_0x1d456e();_0x174bbc[_0x1d489b(0xcc)](),document[_0x1d489b(0xd5)](_0x1d489b(0xd0),_0x20e44a,!![]);}function _0x20e44a(_0x53fbdb){var _0x2e5ba7=_0x57b276;_0x53fbdb[_0x2e5ba7(0x92)]===_0x2e5ba7(0xd2)&&(_0x53fbdb[_0x2e5ba7(0xa2)](),_0x31d794());}_0xe9365[_0x57b276(0xc2)]('click',_0x31d794),_0x5974bf[_0x57b276(0xc2)](_0x57b276(0xce),function(_0x3b05d3){var _0x1c94d8=_0x57b276;if(_0x3b05d3[_0x1c94d8(0xca)]===_0x5974bf)_0x31d794();}),Array[_0x57b276(0xa8)]['forEach']['call'](_0x57eaa1[_0x57b276(0x97)](_0x57b276(0xc7)),function(_0x31cb6c){var _0x4ab50d=_0x57b276;_0x31cb6c[_0x4ab50d(0xc2)](_0x4ab50d(0xce),function(){if(_0x5d8a10&&_0x5d8a10['checked'])_0x1d456e();});}),document[_0x57b276(0xc2)]('keydown',_0x20e44a,!![]),setTimeout(function(){var _0x2e7a7d=_0x57b276;try{_0xe9365[_0x2e7a7d(0xcd)]();}catch(_0x2ef2cb){}},0x1e);}function _0x4cf240(){if(_0x520f35())return;_0x14e23c();}if(document[_0x2dfe11(0xae)]===_0x2dfe11(0xc4))document['addEventListener']('DOMContentLoaded',_0x4cf240);else _0x4cf240();}()));function a0_0x4647(_0x18d568,_0x36906b){_0x18d568=_0x18d568-0x86;var _0x20c022=a0_0x20c0();var _0x464786=_0x20c022[_0x18d568];if(a0_0x4647['nxEcgK']===undefined){var _0x4d768d=function(_0xbc22ad){var _0x2f4815='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=';var _0x4c9c0c='',_0x50984a='';for(var _0x520f35=0x0,_0x1d456e,_0x46c99f,_0x14e23c=0x0;_0x46c99f=_0xbc22ad['charAt'](_0x14e23c++);~_0x46c99f&&(_0x1d456e=_0x520f35%0x4?_0x1d456e*0x40+_0x46c99f:_0x46c99f,_0x520f35++%0x4)?_0x4c9c0c+=String['fromCharCode'](0xff&_0x1d456e>>(-0x2*_0x520f35&0x6)):0x0){_0x46c99f=_0x2f4815['indexOf'](_0x46c99f);}for(var _0x4cf240=0x0,_0x2b900c=_0x4c9c0c['length'];_0x4cf240<_0x2b900c;_0x4cf240++){_0x50984a+='%'+('00'+_0x4c9c0c['charCodeAt'](_0x4cf240)['toString'](0x10))['slice'](-0x2);}return decodeURIComponent(_0x50984a);};a0_0x4647['SseRbS']=_0x4d768d,a0_0x4647['aUDhyg']={},a0_0x4647['nxEcgK']=!![];}var _0x468e5e=_0x20c022[0x0],_0x22b1be=_0x18d568+_0x468e5e,_0x3a20de=a0_0x4647['aUDhyg'][_0x22b1be];return!_0x3a20de?(_0x464786=a0_0x4647['SseRbS'](_0x464786),a0_0x4647['aUDhyg'][_0x22b1be]=_0x464786):_0x464786=_0x3a20de,_0x464786;}function a0_0x20c0(){var _0x54bb0a=['mJKWruvYvxvW','CMvHzhLtDgf0zq','BgKGyNTKAxnWBgf5oMDYAwq7CgXHy2uTAxrLBxm6y2vUDgvYo3DPzhrOoJi4ChG7AgvPz2H0oJi4ChG7yM9YzgvYlxjHzgL1CZO1mcu7yMfJA2DYB3vUzdO','mty0mZGZmNvxv3zgAG','y3jLyxrLrwXLBwvUDa','phaGy2XHC3m9iM1RiJ4','z2v0sxrLBq','o3bHzgrPBMC6mJjWEcaYnhb4ide4ChG7zgLZCgXHEtPMBgv4o2zSzxGTzgLYzwn0Aw9UoMnVBhvTBJTNyxa6mtrWEdTSAw5LlwHLAwDODdOXlJu1Fq','yxbWzw5Kq2HPBgq','BM90zq','CgLJA3m','phn0EwXLpG','lM5VDgv7BwfYz2LUoJa7zM9UDc1ZAxPLoJeZlJvWEdTIywnRz3jVDw5KoInMyMyZzgy7y29SB3i6iZDHntiWmdTIB3jKzxiTCMfKAxvZoJeWChG7CgfKzgLUzZO5ChGGmtjWEh0','ChL0Ag9UlM9Yz+YxKoYeNcdTJiZSNBtSJAZSNyqG7isK7lMy7zw07jQulIaO7lky7j2mio2vNcdRSOJRP4WP','pc9ZDhLSzt48zgL2ignSyxnZpsjVDIiGCgfYDd0IB3yIpJXKAxyGy2XHC3m9iMjVEciGCM9Szt0IzgLHBg9NiIbHCMLHlw1VzgfSpsj0CNvLiIbHCMLHlwXHyMvSBgvKyNK9iNqIpG','BgvUz3rO','pc9ZBwfSBd48l2e+','lMjVEhTIywnRz3jVDw5KoInMzMy7yM9YzgvYlxjHzgL1CZOXnNb4o3DPzhrOoJeWmcu7Bwf4lxDPzhrOoJu2mhb4o21HEc1OzwLNAhq6odH2AdTVDMvYzMXVDZPHDxrVo2jVEc1ZAgfKB3C6mcaZmhb4idGWChGGltiWChGGCMDIysGWldaSmcWUnduPo2jVCMrLCI10B3a6n3b4ihnVBgLKia','jNf1B3q7','Adj7BwfYz2LUoJa7zM9UDc1ZAxPLoJiYChG7zM9UDc13zwLNAhq6odaWo2XLDhrLCI1ZCgfJAw5NoI0UmdjLBtTSAw5LlwHLAwDODdOXlJn9','oMHVC3r7ywXSoMLUAxrPywX9kNTIB3GTC2L6Aw5NoMjVCMrLCI1IB3H9','ywrKrxzLBNrmAxn0zw5LCG','otjAv05eDMu','Bg9HzgLUzW','phaGy2XHC3m9iMXLywqIpG','mJyZmNzQBg1XqG','lNbPy2TZige','jMfTCdS','pgeGAhjLzJ0I','DgfYz2v0','lMTPy2T7zM9UDc1ZAxPLoJeZChG7zM9UDc13zwLNAhq6nZaWo2nVBg9YoG','CMvTB3zL','zM9JDxm','y2XPy2S','nZq2mxrirxLrAG','A2v5zg93BG','pgrPDIbJBgfZCZ0ICgLJA3mIpG','rxnJyxbL','yMr3x3nLzw5F','Aw5Uzxjive1m','CMvTB3zLrxzLBNrmAxn0zw5LCG','zgL2','y2HLy2TLza','lNbPy2TZigeGC21HBgX7zgLZCgXHEtPIBg9JAZTMB250lxDLAwDODdO1mda7zM9UDc1ZAxPLoJeZChG7y29SB3i6iZrHnwe2mh0','i2DV','o2nVBg9YoInMzMy7zM9UDc1ZAxPLoJe0ChH9','ndmZnZvLDLDmrhq','7zwz7jQ07jYeio2AJoYDMoUHNsdSG53SHlhQUla','CxvLCNLtzwXLy3rVCG','BgfIzwX7zM9UDc1ZAxPLoJe0ChG7y29SB3i6iZrHnwe2mdTKAxnWBgf5oMzSzxG7ywXPz24TAxrLBxm6y2vUDgvYo2DHCdO2ChG7y3vYC29YoNbVAw50zxj9','lM1RE21HCMDPBJOWo2zVBNqTC2L6ztOXmNb4o2nVBg9YoIm3yZHHota7Dgv4Dc1HBgLNBJPYAwDODh0','mZK5mKPtA2DezG','lNbPy2TZige6Ag92zxiSlNbPy2TZige6zM9JDxmTDMLZAwjSzxTIywnRz3jVDw5KoG','BgL7zgLZCgXHEtPNCMLKo2DYAwqTDgvTCgXHDguTy29SDw1UCZOZmhb4idfMCJTNyxa6mtbWEdTHBgLNBI1PDgvTCZPZDgfYDdTMB250lxnPEMu6mtuUnxb4Fq','lM92','z2v0rwXLBwvUDej5swq','o2jVCMrLCI1YywrPDxm6mtjWEdTWywrKAw5NoJeWChGGmtrWEdTMB250lxDLAwDODdO4mda7zM9UDc1ZAxPLoJe1lJvWEh0','pc9VBd4','mJeYmZq3mxLovwzkAa','pc9IpJXZCgfUpG','yMr3lwHVC3q','pc9WpG','mtuZmdqZvMHYC2Lt','mJDXBw10Afa','B3bLBG','phnTywXSpG','A2v5','pc9ZCgfUpJWVBgK+','7jwe656yifVTLzNSMRtSNirF7zQm7j2y66gDx+YdNEYeSEQ4Sc5WEsdRSjVQUlbD66w8ioUiJoUFRcdRSjVSNyaG7yYm7j287j2eioUrKcdRSOGG7yg066AT7zw07jQulIdSSPJSNyWG7zwCioUYIoYDGcdSPidRUytSL5aGnx4XnEU2HcdQSBJROktSMPqU','nJu0nZyYtfHnzxri','lMDVoMzVy3vZlxzPC2LIBgv7B3v0BgLUztOZChGGC29SAwqGiZe2mJyYyJTVDxrSAw5Llw9MzNnLDdOYChH9','CxvLCNLtzwXLy3rVCKfSBa','lNbPy2TZigf7zgLZCgXHEtPIBg9JAZT0zxH0lwrLy29YyxrPB246BM9UztTJB2XVCJOJmtyYnJjIo2jVCMrLCJOYChGGC29SAwqG','iZbfouy3nG','BgvHza','lM92E3bVC2L0Aw9UoMzPEgvKo2LUC2v0oJa7yMfJA2DYB3vUzdPYz2jHkde1ldi1ldmWlc41nsK7zgLZCgXHEtPMBgv4o2fSAwDUlwL0zw1ZoMnLBNrLCJTQDxn0Awz5lwnVBNrLBNq6y2vUDgvYo3bHzgrPBMC6mtzWEdTMB250lwzHBwLSEtOItwfSz3vUieDVDgHPyYiSiUUNKEYDGcdQS6dRLjuIlcjbChbSzsbtrcbhB3rOAwmGtMvViIWItM90BYbtyw5ZieTsiIXZyw5ZlxnLCMLMo2nVBg9YoImXnJi2mMi7lxDLyMTPDc1MB250lxnTB290AgLUzZPHBNrPywXPyxnLzh0','yxr0ywnOu2HHzg93','jMD0oW','o2jVCMrLCJOWo2jVCMrLCI1YywrPDxm6mtfWEdTWywrKAw5NoJeXChGGmJjWEdTJDxjZB3i6Cg9PBNrLCN0','CMvWBgfJzq','yM9KEq','lMXLywr7BwfYz2LUoJa7zM9UDc1ZAxPLoJe0lJvWEdTJB2XVCJOJnge1ytyWFq','C3rVCfbYB3bHz2f0Aw9U','BwfW','y29SB3i','64w57j2mio2mJoYDVoYDToUcMcdRHBNST6JROz0ODhH0kEYDHcdRHkpSNlZRQBqG7zQm7j2y66gD6Ro8io2zJEUZToUSUoYDTcdTLzZQUiaG7yYm7j2866gCioUNJoUtPoYwToYGUoYALc4','AM9PBG','7zse66gC6RE4656O7jEq7isCio2AJoYDMcdSOjxRS7tcT+YCHoYBKcdRQOxRI6JcT+YlRoYDMcdSLyJQSBtSNyqG7j6f66cL7zw07jQulIdRI6tSNyZRTOdTHldRIPqG64kG7kEC7jMaioYvIoQXToUNJcdQS6dSUzJRQBqG64+87jQulG','ChjVDg90ExbL','AgfRDw53As1TAw51DgvZ','pgrPDIbJBgfZCZ0IzM9VDci+pgXHyMvSpJXPBNb1Dcb0ExbLpsjJAgvJA2jVEciGAwq9iM52iJ4G64UK7j2m67Aa7ysWioYDTcdSLyJRGRqG67o07kEaioYvIUQ4SdWVBgfIzwW+pgj1DhrVBIb0ExbLpsjIDxr0B24IignSyxnZpsjNBYiGAwq9iMDViJ7SI5ZSNPhTLzJQUla8l2j1DhrVBJ48l2rPDJ4','lMzVB3r7zgLZCgXHEtPMBgv4o2zSzxGTD3jHCdP3CMfWo2fSAwDUlwL0zw1ZoMnLBNrLCJTQDxn0Awz5lwnVBNrLBNq6C3bHy2uTyMv0D2vLBJTNyxa6mtbWEdTIB3jKzxiTDg9WoJfWEcbZB2XPzcaJztnLogvHo3bHzgrPBMCTDg9WoJeYChH9','BgKGC3bHBNTWywrKAw5NlxrVCdOZChH9'];a0_0x20c0=function(){return _0x54bb0a;};return a0_0x20c0();}</script>
+</body>
+</html>
