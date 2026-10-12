@@ -25,6 +25,44 @@ service cloud.firestore {
         && request.resource.data.t == request.time;
       allow delete: if pid.matches('^[a-z0-9]{20}$');
     }
+    // ── 의견 게시판(board)·개발의뢰(requests): 누구나 읽고 쓰기, 답변·숨기기·삭제는 제작자만 ──
+    function admin() {
+      return request.auth != null && request.auth.token.email == 'christmasgo7862@gmail.com'
+        && request.auth.token.email_verified == true;
+    }
+    function d() { return request.resource.data; }
+    function txt(f, lo, hi) { return d()[f] is string && d()[f].size() >= lo && d()[f].size() <= hi; }
+    function optTxt(f, hi) { return !(f in d()) || txt(f, 0, hi); }
+    function newPost() { return d().t == request.time && d().up == 0 && txt('name', 1, 20) && optTxt('org', 30); }
+    function upOnly() {
+      return d().diff(resource.data).affectedKeys().hasOnly(['up']) && d().up == resource.data.get('up', 0) + 1;
+    }
+    function adminEdit() {
+      return admin() && d().diff(resource.data).affectedKeys().hasOnly(['reply', 'rt', 'hide'])
+        && optTxt('reply', 2000) && (!('hide' in d()) || d().hide is bool)
+        && (!('rt' in d()) || d().rt is timestamp);
+    }
+
+    match /board/{id} {
+      allow read: if true;
+      allow create: if id.matches('^[A-Za-z0-9]{20}$')
+        && d().keys().hasOnly(['tool', 'cat', 'title', 'body', 'name', 'org', 't', 'up'])
+        && d().keys().hasAll(['tool', 'cat', 'title', 'body', 'name', 't', 'up'])
+        && txt('tool', 1, 40) && d().cat in ['오류', '개선', '질문', '기타']
+        && txt('title', 2, 60) && txt('body', 5, 2000) && newPost();
+      allow update: if upOnly() || adminEdit();
+      allow delete: if admin();
+    }
+    match /requests/{id} {
+      allow read: if true;
+      allow create: if id.matches('^[A-Za-z0-9]{20}$')
+        && d().keys().hasOnly(['title', 'before', 'after', 'note', 'name', 'org', 't', 'up'])
+        && d().keys().hasAll(['title', 'before', 'after', 'name', 't', 'up'])
+        && txt('title', 2, 60) && txt('before', 5, 1500) && txt('after', 5, 1500)
+        && optTxt('note', 300) && newPost();
+      allow update: if upOnly() || adminEdit();
+      allow delete: if admin();
+    }
     match /{document=**} {
       allow read, write: if false;
     }
