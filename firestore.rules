@@ -63,6 +63,21 @@ service cloud.firestore {
       allow update: if upOnly() || adminEdit();
       allow delete: if admin();
     }
+    // ── 오류 기록(errors): 각 도구가 오류·실패 문구를 자동으로 남김 ──
+    //    누구나 '기록'만 가능(형식·길이 검사), 읽기·처리완료·삭제는 제작자만
+    match /errors/{id} {
+      allow create: if id.matches('^[A-Za-z0-9]{20}$')
+        && d().keys().hasOnly(['tool', 'ver', 'kind', 'msg', 'where', 'ua', 'page', 't'])
+        && d().keys().hasAll(['tool', 'ver', 'kind', 'msg', 't'])
+        && d().tool is string && d().tool.matches('^[a-z0-9-]{1,40}$')
+        && txt('ver', 0, 20) && d().kind in ['오류', '실패']
+        && txt('msg', 1, 300) && optTxt('where', 120) && optTxt('ua', 200) && optTxt('page', 200)
+        && d().t == request.time;
+      allow read: if admin();
+      allow update: if admin() && d().diff(resource.data).affectedKeys().hasOnly(['done'])
+        && d().done is bool;
+      allow delete: if admin();
+    }
     match /{document=**} {
       allow read, write: if false;
     }
