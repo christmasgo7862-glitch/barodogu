@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="author" content="최은영">
+<title>오류 기록 · 바로도구함</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=JetBrains+Mono:wght@500;600&display=swap">
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<style>
+:root{
+  color-scheme:light;
+  --bg:#F6F9FA; --bg-2:#EEF4F6; --card:#FFFFFF;
+  --ink:#0D1A1F; --ink-2:#4A5A60; --ink-3:#7C8A90;
+  --line:rgba(13,26,32,.08); --line-2:rgba(13,26,32,.14);
+  --mint:#0E9F76; --mint-2:#0A8663; --coral:#E0554A; --amber:#B07A0C; --cyan:#2B8BDB;
+  --mint-soft:rgba(14,159,118,.10); --coral-soft:rgba(224,85,74,.10); --amber-soft:rgba(176,122,12,.11);
+  --scrim:rgba(20,34,42,.38);
+  --shadow:0 1px 2px rgba(20,40,60,.04),0 14px 34px -18px rgba(20,40,60,.22);
+  --f:"Noto Sans KR","Malgun Gothic","Apple SD Gothic Neo",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+button{font:inherit;cursor:pointer}
+.wrap{max-width:980px;margin:0 auto;padding:22px 16px 60px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
+.brand i{width:34px;height:34px;border-radius:10px;background:var(--mint);display:grid;place-items:center;color:#fff;font-style:normal;font-weight:900}
+.brand b{font-size:15px;font-weight:900;letter-spacing:-.2px}
+.brand small{display:block;font-size:12px;color:var(--ink-3);font-weight:500;margin-top:-2px}
+.who{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-2)}
+h1{font-size:26px;font-weight:900;letter-spacing:-.6px;margin:0 0 4px}
+.lead{color:var(--ink-2);margin:0 0 18px}
+.btn{border:1px solid var(--line-2);background:var(--card);color:var(--ink);border-radius:10px;padding:8px 13px;font-size:14px;font-weight:700;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{border-color:var(--mint);color:var(--mint-2)}
+.btn.pri{background:var(--mint);border-color:var(--mint);color:#fff}
+.btn.pri:hover{background:var(--mint-2);color:#fff}
+.btn.danger:hover{border-color:var(--coral);color:var(--coral)}
+.btn:disabled{opacity:.5;cursor:default}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:18px}
+.gate{text-align:center;padding:42px 20px}
+.gate h2{margin:0 0 6px;font-size:20px}
+.gate p{color:var(--ink-2);margin:0 0 18px}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:14px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.stat span{display:block;font-size:12.5px;color:var(--ink-3);font-weight:700}
+.stat b{font-size:24px;font-weight:900;font-variant-numeric:tabular-nums;letter-spacing:-.5px}
+.stat.alert b{color:var(--coral)}
+.bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.bar select{font:inherit;font-size:14px;border:1px solid var(--line-2);border-radius:10px;padding:7px 10px;background:var(--card);color:var(--ink);max-width:100%}
+.bar label{display:flex;align-items:center;gap:6px;font-size:14px;color:var(--ink-2)}
+.bar .sp{flex:1}
+.note{font-size:12.5px;color:var(--ink-3)}
+.msgbox{border-radius:12px;padding:12px 14px;font-size:14px;margin-bottom:14px;display:none}
+.msgbox.on{display:block}
+.msgbox.bad{background:var(--coral-soft);color:#9A2C23}
+.msgbox.ok{background:var(--mint-soft);color:var(--mint-2)}
+.list{display:flex;flex-direction:column;gap:10px}
+.item{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.item.done{opacity:.6}
+.ihead{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+.tool{font-weight:900;font-size:14.5px}
+.tag{font-size:12px;font-weight:800;border-radius:999px;padding:2px 9px}
+.tag.err{background:var(--coral-soft);color:#B23A30}
+.tag.fail{background:var(--amber-soft);color:#8A5F07}
+.tag.done{background:var(--mint-soft);color:var(--mint-2)}
+.cnt{margin-left:auto;font-weight:900;font-variant-numeric:tabular-nums}
+.cnt small{font-weight:500;color:var(--ink-3);font-size:12.5px;margin-left:4px}
+.msg{font-size:14.5px;line-height:1.55;word-break:break-word;margin:2px 0 8px}
+.meta{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;color:var(--ink-2)}
+.meta b{color:var(--ink-3);font-weight:700;margin-right:4px}
+.meta code{font-family:var(--mono);font-size:12px}
+.acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.acts .btn{padding:6px 11px;font-size:13px}
+.empty{text-align:center;color:var(--ink-3);padding:40px 10px}
+.foot{margin-top:28px;text-align:center;font-size:12px;color:var(--ink-3)}
+.guide{position:fixed;inset:0;background:var(--scrim);display:flex;align-items:center;justify-content:center;padding:16px;z-index:20}
+.guide[hidden]{display:none}
+.gbox{background:var(--card);border-radius:18px;max-width:460px;width:100%;padding:22px;box-shadow:0 24px 60px rgba(15,23,42,.25)}
+.gbox .k{color:var(--mint-2);font-weight:900;font-size:13px;margin:0 0 4px}
+.gbox h3{margin:0 0 12px;font-size:19px}
+.gbox ol{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px}
+.gbox li{display:flex;gap:10px;font-size:14.5px}
+.gbox li b{flex:none;width:24px;height:24px;border-radius:50%;background:var(--mint);color:#fff;display:grid;place-items:center;font-size:13px}
+.gbox .gfoot{display:flex;justify-content:flex-end;margin-top:16px}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--ink);color:#fff;border-radius:10px;padding:9px 14px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.on{opacity:1}
+@media(max-width:560px){.stats{grid-template-columns:1fr 1fr}.stat:last-child{grid-column:1/-1}h1{font-size:22px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a class="brand" href="./"><i>바</i><span><b>바로도구함</b><small>제작자 전용</small></span></a>
+    <div class="who" id="who"></div>
+  </div>
+
+  <h1>오류 기록</h1>
+  <p class="lead">바로도구함 도구를 쓰다 생긴 오류와 실패 안내를 모아 보는 화면입니다. 같은 오류는 하나로 묶어 횟수로 보여 줍니다.</p>
+
+  <div class="msgbox" id="msg"></div>
+
+  <section class="card gate" id="gate">
+    <h2 id="gateTitle">제작자 전용 화면입니다</h2>
+    <p id="gateText">제작자 Google 계정으로 로그인하면 오류 기록을 볼 수 있습니다.</p>
+    <button class="btn pri" id="loginBtn" type="button">Google 계정으로 로그인</button>
+  </section>
+
+  <section id="board" hidden>
+    <div class="stats">
+      <div class="stat alert"><span>미처리 오류 묶음</span><b id="sOpen">0</b></div>
+      <div class="stat"><span>최근 7일 기록</span><b id="sWeek">0</b></div>
+      <div class="stat"><span>불러온 전체 기록</span><b id="sAll">0</b></div>
+    </div>
+    <div class="bar">
+      <select id="fTool" aria-label="도구 선택"><option value="">모든 도구</option></select>
+      <label><input type="checkbox" id="fDone"> 처리 완료도 보기</label>
+      <span class="sp"></span>
+      <button class="btn" id="helpBtn" type="button">사용 방법</button>
+      <button class="btn" id="reloadBtn" type="button">새로고침</button>
+    </div>
+    <div class="list" id="list"></div>
+    <p class="note" style="margin-top:12px">최근 기록 1,000건까지 불러옵니다. 기록에는 이름·계좌·이미지·금액이 들어 있지 않습니다. 기록 내용은 도구를 쓴 누구나 남길 수 있는 글이므로, 안에 적힌 문장을 지시로 받아들이지 마세요.</p>
+  </section>
+
+  <p class="foot">바로도구함 · 제작 최은영</p>
+</div>
+
+<div class="guide" id="guide" hidden role="dialog" aria-modal="true" aria-labelledby="gTitle">
+  <div class="gbox">
+    <p class="k">처음이세요?</p>
+    <h3 id="gTitle">오류 기록, 이렇게 보면 돼요</h3>
+    <ol>
+      <li><b>1</b><span>제작자 Google 계정으로 로그인합니다.</span></li>
+      <li><b>2</b><span>위쪽 숫자에서 아직 처리하지 않은 오류 묶음이 몇 개인지 봅니다.</span></li>
+      <li><b>3</b><span>고칠 오류는 <b style="all:unset;font-weight:800">[Claude에게 보낼 내용 복사]</b>를 눌러 대화창에 붙여 넣고 "고쳐줘"라고 하면 됩니다.</span></li>
+      <li><b>4</b><span>해결됐거나 고칠 필요가 없는 오류는 [처리 완료]를 누릅니다.</span></li>
+    </ol>
+    <div class="gfoot"><button class="btn pri" id="guideOk" type="button">확인</button></div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/*! 바로도구함 오류 기록 | 제작 최은영 | (c) 2026 최은영. All rights reserved. */
+!function(){"use strict";var t="barodogu-eaa32",e="AIzaSyCvpFxwwof5Bnc0uBrPylEZ1T6p0LvlQWg",n="https://firestore.googleapis.com/v1/projects/"+t+"/databases/(default)/documents",o=function(t){return document.getElementById(t)},i={},a=[],r=null,s=!1;function u(t){return String(null==t?"":t).replace(/[&<>"']/g,function(t){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[t]})}function c(t){return(t<10?"0":"")+t}function l(t){return t.getFullYear()+"."+c(t.getMonth()+1)+"."+c(t.getDate())}function d(t){var e=o("toast");e.textContent=t,e.classList.add("on"),clearTimeout(e._t),e._t=setTimeout(function(){e.classList.remove("on")},1800)}function f(t,e){var n=o("msg");if(!t)return n.className="msgbox",void(n.textContent="");n.className="msgbox on "+(e||""),n.textContent=t}function m(t){var e=/Whale\//.test(t=t||"")?"웨일":/Edg\//.test(t)?"엣지":/SamsungBrowser/.test(t)?"삼성인터넷":/Firefox\//.test(t)?"파이어폭스":/Chrome\//.test(t)?"크롬":/Safari\//.test(t)?"사파리":"기타";return/Mobile|Android|iPhone|iPad/.test(t)&&(e+="(모바일)"),e}function p(t){var e={};return t.forEach(function(t){t&&(e[t]=(e[t]||0)+1)}),Object.keys(e).sort(function(t,n){return e[n]-e[t]}).map(function(t){return t+" "+e[t]+"회"})}var g="barodogu_errors_guide_seen";function h(){o("guide").hidden=!1,setTimeout(function(){try{o("guideOk").focus()}catch(t){}},30)}function b(){o("guide").hidden=!0,function(){try{localStorage.setItem(g,"1")}catch(t){}}()}function v(t){return i[t]||t}function y(t){t&&"auth/popup-closed-by-user"!==t.code&&"auth/cancelled-popup-request"!==t.code&&f("로그인하지 못했습니다. ("+(t.code||t.message||"알 수 없는 오류")+")","bad")}function C(){r&&r.signOut()}function k(t){var e=o("who");if(e.innerHTML="",f(""),!t)return o("gate").hidden=!1,o("board").hidden=!0,o("gateTitle").textContent="제작자 전용 화면입니다",o("gateText").textContent="제작자 Google 계정으로 로그인하면 오류 기록을 볼 수 있습니다.",void(o("loginBtn").hidden=!1);var n=document.createElement("span");n.textContent=t.email||"",e.appendChild(n);var i=document.createElement("button");if(i.className="btn",i.type="button",i.textContent="로그아웃",i.onclick=C,e.appendChild(i),"christmasgo7862@gmail.com"!==t.email||!t.emailVerified)return o("gate").hidden=!1,o("board").hidden=!0,o("gateTitle").textContent="제작자 계정이 아닙니다",o("gateText").textContent="이 화면은 바로도구함 제작자 계정으로만 볼 수 있습니다. 로그아웃한 뒤 제작자 계정으로 다시 로그인해 주세요.",void(o("loginBtn").hidden=!0);o("gate").hidden=!0,o("board").hidden=!1,function(){try{return"1"===localStorage.getItem(g)}catch(t){return!1}}()||h(),x()}function T(t,o){return r.currentUser.getIdToken().then(function(i){return fetch(n+t+"?key="+e,{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+i},body:JSON.stringify(o)})}).then(function(t){return t.json().catch(function(){return{}}).then(function(e){if(!t.ok){var n=new Error(e&&e.error&&e.error.message||"HTTP "+t.status);throw n.status=t.status,n}return e})})}function E(t){return t?"stringValue"in t?t.stringValue:"booleanValue"in t?t.booleanValue:"timestampValue"in t?t.timestampValue:"":""}function x(){s||(s=!0,o("reloadBtn").disabled=!0,o("list").innerHTML='<div class="empty">불러오는 중…</div>',T(":runQuery",{structuredQuery:{from:[{collectionId:"errors"}],orderBy:[{field:{fieldPath:"t"},direction:"DESCENDING"}],limit:1e3}}).then(function(t){a=(t||[]).filter(function(t){return t.document}).map(function(t){var e=t.document.fields||{};return{name:t.document.name,tool:E(e.tool),ver:E(e.ver),kind:E(e.kind),msg:E(e.msg),where:E(e.where),ua:E(e.ua),page:E(e.page),done:!0===E(e.done),t:new Date(E(e.t)||t.document.createTime)}}),w(),j()}).catch(function(t){f(403===t.status||/PERMISSION_DENIED|permission/i.test(t.message)?"오류 기록을 읽을 권한이 없습니다. Firebase에 오류 기록 규칙이 아직 반영되지 않았을 수 있습니다. (GitHub 저장소의 FIREBASE_SERVICE_ACCOUNT 비밀값 설정이 필요합니다)":"오류 기록을 불러오지 못했습니다. ("+t.message+")","bad"),o("list").innerHTML=""}).finally(function(){s=!1,o("reloadBtn").disabled=!1}))}function w(){var t=o("fTool"),e=t.value,n={};a.forEach(function(t){n[t.tool]=1}),t.innerHTML='<option value="">모든 도구</option>'+Object.keys(n).sort().map(function(t){return'<option value="'+u(t)+'">'+u(v(t))+"</option>"}).join(""),n[e]&&(t.value=e)}function j(){var t,e,n=o("fTool").value,i=o("fDone").checked,r=(t={},e=[],a.forEach(function(n){var o=n.tool+""+n.kind+""+n.msg;t[o]||(t[o]={tool:n.tool,kind:n.kind,msg:n.msg,items:[]},e.push(t[o])),t[o].items.push(n)}),e.forEach(function(t){t.items.sort(function(t,e){return e.t-t.t}),t.last=t.items[0].t,t.first=t.items[t.items.length-1].t,t.open=t.items.filter(function(t){return!t.done}).length,t.done=0===t.open}),e.sort(function(t,e){return t.done!==e.done?t.done?1:-1:e.last-t.last}),e),s=Date.now()-6048e5;o("sOpen").textContent=r.filter(function(t){return!t.done}).length,o("sWeek").textContent=a.filter(function(t){return t.t.getTime()>=s}).length,o("sAll").textContent=a.length;var c=r.filter(function(t){return(!n||t.tool===n)&&(i||!t.done)}),d=o("list");c.length?(d.innerHTML=c.map(function(t,e){var n,o,i=p(t.items.map(function(t){return t.ver})),a=p(t.items.map(function(t){return t.where})),r=p(t.items.map(function(t){return m(t.ua)})),s=t.items.filter(function(t){return/^file:/.test(t.page)}).length,c=l(t.first)===l(t.last)?l(t.last):l(t.first)+" ~ "+l(t.last);return'<article class="item'+(t.done?" done":"")+'" data-i="'+e+'"><div class="ihead"><span class="tool">'+u(v(t.tool))+'</span><span class="tag '+("오류"===t.kind?"err":"fail")+'">'+u(t.kind||"-")+"</span>"+(t.done?'<span class="tag done">처리 완료</span>':"")+'<span class="cnt">'+t.items.length+"회<small>"+u((n=t.last,(o=(Date.now()-n.getTime())/1e3)<60?"방금":o<3600?Math.floor(o/60)+"분 전":o<86400?Math.floor(o/3600)+"시간 전":o<604800?Math.floor(o/86400)+"일 전":l(n)))+'</small></span></div><p class="msg">'+u(t.msg)+'</p><div class="meta"><span><b>기간</b>'+u(c)+"</span><span><b>버전</b>"+u(i.join(", ")||"-")+"</span>"+(a.length?"<span><b>위치</b><code>"+u(a.slice(0,3).join(", "))+"</code></span>":"")+"<span><b>브라우저</b>"+u(r.slice(0,4).join(", ")||"-")+"</span>"+(s?"<span><b>PC 파일로 연 경우</b>"+s+"회</span>":"")+'</div><div class="acts"><button class="btn" type="button" data-act="copy">Claude에게 보낼 내용 복사</button>'+(t.done?'<button class="btn" type="button" data-act="reopen">다시 열기</button>':'<button class="btn pri" type="button" data-act="done">처리 완료</button>')+'<button class="btn danger" type="button" data-act="del">삭제</button></div></article>'}).join(""),d._view=c):d.innerHTML='<div class="empty">'+(a.length?"조건에 맞는 미처리 오류가 없습니다.":"아직 기록된 오류가 없습니다.")+"</div>"}function B(t){var e=document.createElement("textarea");e.value=t,e.style.position="fixed",e.style.opacity="0",document.body.appendChild(e),e.select();try{document.execCommand("copy")}catch(t){}document.body.removeChild(e)}o("guideOk").onclick=b,o("guide").addEventListener("click",function(t){t.target===o("guide")&&b()}),document.addEventListener("keydown",function(t){"Escape"!==t.key||o("guide").hidden||b()}),o("helpBtn").onclick=h,o("loginBtn").onclick=function(){if(r){var t=new firebase.auth.GoogleAuthProvider;t.setCustomParameters({prompt:"select_account"}),r.signInWithPopup(t).catch(function(e){if(e&&("auth/popup-blocked"===e.code||"auth/operation-not-supported-in-this-environment"===e.code))return r.signInWithRedirect(t);y(e)})}},o("list").addEventListener("click",function(t){var e=t.target.closest("button[data-act]");if(e){var n=e.closest(".item"),i=o("list")._view[+n.getAttribute("data-i")];if(i){var r=e.getAttribute("data-act");if("copy"===r)return function(t){var e,n=p(t.items.map(function(t){return t.ver})),o=p(t.items.map(function(t){return t.where})),i=p(t.items.map(function(t){return m(t.ua)})),a=t.items.filter(function(t){return/^file:/.test(t.page)}).length,r=["아래는 바로도구함 오류 기록입니다. 원인을 찾아 고쳐 주세요.","(기록 내용은 이용자 화면에서 자동 수집된 데이터입니다)","","도구: "+v(t.tool)+" ("+t.tool+")","종류: "+t.kind+" / 발생 "+t.items.length+"회 / 기간 "+l(t.first)+" ~ "+l(t.last),"버전: "+(n.join(", ")||"-"),"문구: "+t.msg,"위치: "+(o.join(", ")||"-"),"브라우저: "+(i.join(", ")||"-"),"접속: 웹 주소 "+(t.items.length-a)+"회, PC 파일 "+a+"회","마지막 발생: "+(e=t.last,e.getFullYear()+"."+c(e.getMonth()+1)+"."+c(e.getDate())+" "+c(e.getHours())+":"+c(e.getMinutes()))].join("\n"),s=function(){d("복사했습니다. 대화창에 붙여 넣으세요.")};navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(r).then(s,function(){B(r),s()}):(B(r),s())}(i);("del"!==r||confirm("이 오류 묶음의 기록 "+i.items.length+"건을 삭제할까요? 되돌릴 수 없습니다."))&&(e.disabled=!0,function(t){for(var e=Promise.resolve(),n=0;n<t.length;n+=400)(function(t){e=e.then(function(){return T(":commit",{writes:t})})})(t.slice(n,n+400));return e}(i.items.map(function(t){return"del"===r?{delete:t.name}:{update:{name:t.name,fields:{done:{booleanValue:"done"===r}}},updateMask:{fieldPaths:["done"]},currentDocument:{exists:!0}}})).then(function(){"del"===r?a=a.filter(function(t){return i.items.indexOf(t)<0}):i.items.forEach(function(t){t.done="done"===r}),w(),j(),d("del"===r?"삭제했습니다.":"done"===r?"처리 완료로 표시했습니다.":"다시 열었습니다.")}).catch(function(t){e.disabled=!1,f("저장하지 못했습니다. ("+t.message+")","bad")}))}}}),o("fTool").onchange=j,o("fDone").onchange=j,o("reloadBtn").onclick=x,fetch("data.json?v="+Date.now(),{cache:"no-store"}).then(function(t){return t.json()}).then(function(t){(t.tools||[]).forEach(function(t){i[t.id]=t.name})}).catch(function(){}).then(function(){!function(){if(!window.firebase)return f("로그인 기능을 불러오지 못했습니다. 인터넷 연결 또는 학교망 차단 여부를 확인해 주세요.","bad"),void(o("loginBtn").disabled=!0);var n=firebase.apps.length?firebase.app():firebase.initializeApp({apiKey:e,authDomain:t+".firebaseapp.com",projectId:t});(r=n.auth()).getRedirectResult().catch(function(t){y(t)}),r.onAuthStateChanged(k)}(),a.length&&(w(),j())})}();
+</script>
+</body>
+</html>
