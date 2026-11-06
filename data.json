@@ -2,7 +2,7 @@
  "site": {
   "url": "https://christmasgo7862-glitch.github.io/barodogu/",
   "version": "2.9",
-  "updated": "2026.11.05"
+  "updated": "2026.11.06"
  },
  "counter": {
   "projectId": "barodogu-eaa32",
@@ -339,6 +339,10 @@
     {
      "date": "2026.11.05",
      "text": "소득세·지방소득세 원천징수 추가 (일용근로자 방식 자동 계산·소액부징수, 직접 입력 선택) — 이용자 의견 반영"
+    },
+    {
+     "date": "2026.11.06",
+     "text": "급여명세서를 A4로 인쇄할 때 표 오른쪽 테두리가 잘리던 문제 수정"
     }
    ],
    "icon": "clock",
