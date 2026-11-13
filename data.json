@@ -1,7 +1,7 @@
 {
  "site": {
   "url": "https://christmasgo7862-glitch.github.io/barodogu/",
-  "version": "3.2",
+  "version": "3.3",
   "updated": "2026.11.13"
  },
  "counter": {
@@ -9,6 +9,11 @@
   "apiKey": "AIzaSyCvpFxwwof5Bnc0uBrPylEZ1T6p0LvlQWg"
  },
  "news": [
+  {
+   "date": "2026.11.13",
+   "title": "화면을 차분한 흑백으로 바꿨습니다",
+   "text": "초록·민트 색을 걷어내고 글자와 선으로만 정리했습니다. 색이 줄어든 만큼 도구 이름과 설명이 먼저 눈에 들어옵니다. 빨간색은 경고·오류·삭제처럼 조심해야 하는 곳에만 남겨 두었습니다. 작은 회색 글씨는 더 진하게 바꿔 밝은 화면에서도 읽히도록 했습니다. 기능은 그대로입니다."
+  },
   {
    "date": "2026.11.13",
    "title": "연차수당 계산기, 잘못 입력하면 금액 대신 경고가 뜹니다",
