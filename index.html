@@ -169,7 +169,7 @@ body:not(.has-counts) .counts{display:none}
 .empty{grid-column:1/-1;padding:44px 20px;text-align:center;color:var(--ink-3);border:1px dashed var(--line-2);border-radius:24px}
 
 /* 새 소식 · 쓰기 전에 */
-.two{display:grid;grid-template-columns:1.1fr .9fr;gap:16px;padding-top:80px}
+.two{display:grid;grid-template-columns:1fr;gap:16px;padding-top:80px}
 @media (max-width:900px){.two{grid-template-columns:1fr}}
 .two .sec{padding-top:0}
 .two .sec__head h2{font-size:clamp(22px,2.6vw,28px)}
@@ -405,7 +405,7 @@ h3{word-break:keep-all;overflow-wrap:break-word}</style>
     <a class="logo" href="#top" aria-label="바로도구함 처음으로"><span class="logo__mark" aria-hidden="true">바</span>바로도구함<small id="navVer"></small></a>
     <nav class="nav__links" aria-label="바로가기">
       <a href="#tools">도구 모음</a>
-      <a href="#news-sec">새 소식</a>
+      
       <a href="#guide" class="hide-sm">사용 안내</a>
       <a href="#talk" class="hide-sm">의견 남기기</a>
     </nav>
@@ -422,7 +422,6 @@ h3{word-break:keep-all;overflow-wrap:break-word}</style>
     <p class="lede rise d2"><span>급여·수당·여비 계산과 서식을 한곳에서.</span><span>반복되는 계산은 도구에 맡기고, 확인만 하세요.</span></p>
     <div class="cta rise d3">
       <a class="btn btn--go btn--lg" href="#tools">도구 둘러보기<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6.5l5.5 5.5-5.5 5.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-      <a class="btn btn--line btn--lg" href="#news-sec">새 소식 보기</a>
     </div>
     <p class="maker rise d3" id="heroMeta">기획·제작 <b>최은영</b></p>
 
@@ -468,7 +467,7 @@ h3{word-break:keep-all;overflow-wrap:break-word}</style>
   </section>
 
   <div class="two">
-    <section class="sec" id="news-sec" aria-labelledby="h-news">
+    <section class="sec" id="news-sec" aria-labelledby="h-news" hidden style="display:none">
       <div class="sec__head"><div><p class="eyebrow">UPDATES</p><h2 id="h-news">새 소식</h2></div></div>
       <ul class="news glass" id="news"></ul>
     </section>
