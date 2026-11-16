@@ -1,7 +1,7 @@
 {
  "site": {
   "url": "https://christmasgo7862-glitch.github.io/barodogu/",
-  "version": "3.7",
+  "version": "3.8",
   "updated": "2026.11.16"
  },
  "counter": {
@@ -9,6 +9,11 @@
   "apiKey": "AIzaSyCvpFxwwof5Bnc0uBrPylEZ1T6p0LvlQWg"
  },
  "news": [
+  {
+   "date": "2026.11.16",
+   "title": "바로도구함 3.8 — 도구 정렬 단추",
+   "text": "도구 목록 위의 [최신순]·[업데이트순]·[💡 유용해요순] 단추로 원하는 순서대로 볼 수 있습니다. 최신순은 새로 등록한 도구부터, 업데이트순은 최근에 고친 도구부터, 유용해요순은 💡 유용해요를 많이 받은 도구부터 보여 줍니다. 고른 순서는 다음에 들어와도 기억됩니다."
+  },
   {
    "date": "2026.11.16",
    "title": "새 도구 「특운직 시간 비례 급여 자동 계산기」",
