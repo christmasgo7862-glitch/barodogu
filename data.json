@@ -1,14 +1,19 @@
 {
  "site": {
   "url": "https://christmasgo7862-glitch.github.io/barodogu/",
-  "version": "3.6",
-  "updated": "2026.11.13"
+  "version": "3.7",
+  "updated": "2026.11.16"
  },
  "counter": {
   "projectId": "barodogu-eaa32",
   "apiKey": "AIzaSyCvpFxwwof5Bnc0uBrPylEZ1T6p0LvlQWg"
  },
  "news": [
+  {
+   "date": "2026.11.16",
+   "title": "바로도구함 3.7 — 맑은 하늘색과 분야별 색 띠",
+   "text": "화면을 하늘빛 배경과 파랑 단추로 산뜻하게 바꾸고, 도구 카드 왼쪽 띠를 분야별 색(여비·급여·인사·운영위·세외·복지)으로 구분했습니다. 도구와 쓰는 방법은 그대로입니다."
+  },
   {
    "date": "2026.11.13",
    "title": "화면을 차분한 흑백으로 바꿨습니다",
