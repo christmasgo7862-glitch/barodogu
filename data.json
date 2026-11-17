@@ -2,13 +2,32 @@
  "site": {
   "url": "https://christmasgo7862-glitch.github.io/barodogu/",
   "version": "3.9",
-  "updated": "2026.11.18"
+  "updated": "2026.11.18",
+  "fields": [
+   "교육공무직원",
+   "교직원 급여·복지",
+   "호봉·인사",
+   "학교회계·세무",
+   "학교운영위원회",
+   "문서·업무"
+  ],
+  "types": [
+   "계산기",
+   "엑셀 서식",
+   "문서 자동화",
+   "자가진단"
+  ]
  },
  "counter": {
   "projectId": "barodogu-eaa32",
   "apiKey": "AIzaSyCvpFxwwof5Bnc0uBrPylEZ1T6p0LvlQWg"
  },
  "news": [
+  {
+   "date": "2026.11.17",
+   "title": "도구를 분야·유형으로 나눠 찾기 쉽게 정리했어요",
+   "text": "도구 목록 위에서 분야(교육공무직원·교직원 급여·복지 등)와 유형(계산기·엑셀 서식·문서 자동화)을 고르거나 이름·기능으로 검색할 수 있습니다. 카드는 이름과 한 줄 설명만 보이게 줄였고, 카드를 누르면 자세한 설명이 열립니다."
+  },
   {
    "date": "2026.11.17",
    "title": "명세서·결과는 이제 PDF 대신 엑셀로 — 열어서 바로 고칠 수 있어요",
@@ -159,6 +178,8 @@
    "name": "바로여비",
    "sub": "출장여비 자동계산기",
    "kind": "web",
+   "type": "계산기",
+   "field": "학교회계·세무",
    "url": "https://christmasgo7862-glitch.github.io/baroyeobi/",
    "lead": "에듀파인에서 내려받은 엑셀 파일을 올리면 출장여비가 자동으로 계산됩니다.",
    "feats": [
@@ -211,6 +232,8 @@
    "name": "바로봉",
    "sub": "호봉정정 급여정산 계산기",
    "kind": "web",
+   "type": "계산기",
+   "field": "호봉·인사",
    "url": "https://christmasgo7862-glitch.github.io/barobong-hobong-pay/",
    "lead": "호봉 정정 전·후 월별 급여 차액과 소급액을 한 번에 확인합니다. 설치 없이 PC와 스마트폰에서 씁니다.",
    "feats": [
@@ -268,6 +291,8 @@
    "name": "바로근속",
    "sub": "교육공무직원 근속수당 자동계산기",
    "kind": "web",
+   "type": "계산기",
+   "field": "교육공무직원",
    "url": "https://christmasgo7862-glitch.github.io/barogeunsok/",
    "isNew": true,
    "lead": "나이스 인사기록 출력 엑셀(근무사항·채용전경력)을 끌어다 놓으면 전임경력·채용일·근로시간을 채워 근속기간과 근속수당을 계산합니다.",
@@ -330,6 +355,8 @@
    "name": "바로교육비",
    "sub": "조리실무사 교육비 · 나이스 복무 안내",
    "kind": "web",
+   "type": "계산기",
+   "field": "교육공무직원",
    "url": "https://christmasgo7862-glitch.github.io/baro-gyoyukbi/",
    "isNew": true,
    "lead": "근무유형을 누르면 교육별 지급 여부·출장비·나이스 복무·단가를 알려 주고, 여러 명 교육비를 계산해 결재용 내역서로 출력·엑셀 저장합니다.",
@@ -385,6 +412,8 @@
    "name": "시간강사 캡처 자동계산기",
    "sub": "수업확인표로 수당 계산·급여명세서 발급",
    "kind": "web",
+   "type": "계산기",
+   "field": "교직원 급여·복지",
    "url": "https://christmasgo7862-glitch.github.io/time-lecturer-pay/",
    "lead": "수업확인표를 이미지나 PDF 파일로 저장해 불러오면 날짜별 수업시간을 읽어 급여를 계산하고, 학교명과 직인을 넣은 급여명세서까지 만들어 줍니다. 설치 없이 주소만 열면 됩니다.",
    "feats": [
@@ -479,6 +508,8 @@
    "name": "퍼스널 공직생활 프로파일",
    "sub": "공직 업무성향·스트레스 검사",
    "kind": "web",
+   "type": "자가진단",
+   "field": "호봉·인사",
    "url": "https://christmasgo7862-glitch.github.io/gongmu-insight-lab/",
    "lead": "공직 업무에서 나타나는 판단·협업·스트레스 패턴을 6개 축으로 살펴보고, 31가지 유형 중 나의 업무 유형을 알려 줍니다.",
    "feats": [
@@ -531,6 +562,8 @@
    "name": "학운위 회의록 생성기",
    "sub": "녹음 파일로 회의록·홍보문 작성",
    "kind": "install",
+   "type": "문서 자동화",
+   "field": "학교운영위원회",
    "url": "https://christmasgo7862-glitch.github.io/barodogu/files/hakunwi-minutes.html",
    "lead": "학운위 회의 녹음 파일이나 텍스트 녹취록으로 학교운영위원회 회의록과 심의결과 홍보문을 자동으로 작성합니다.",
    "feats": [
@@ -585,6 +618,8 @@
    "name": "연차수당 원스톱 자동계산기",
    "sub": "직종별 통상임금·연차수당 자동계산서",
    "kind": "excel",
+   "type": "엑셀 서식",
+   "field": "교육공무직원",
    "url": "https://christmasgo7862-glitch.github.io/barodogu/files/yeoncha-onestop.xlsx?v=20261113",
    "lead": "교육공무직원의 직종·근무형태별 통상임금과 연차수당을 한 줄에 한 명씩 입력해 계산합니다. 기준일 하나만 넣으면 재직자·퇴직자, 회계연도 말·중간 날짜를 알아서 구분합니다.",
    "feats": [
@@ -661,6 +696,8 @@
    "name": "10일, 이제 두렵지 않아요",
    "sub": "10일 세외 수납·신고 자동서식",
    "kind": "excel",
+   "type": "엑셀 서식",
+   "field": "학교회계·세무",
    "url": "https://christmasgo7862-glitch.github.io/barodogu/files/ten-days.xlsm?v=20261106-2",
    "lead": "매달 받는 급여·기관부담금 자료 6개를 순서대로 넣으면 K-에듀파인 수납금액과 홈택스·위택스 신고금액, 반환 등록 목록까지 자동으로 정리됩니다.",
    "feats": [
@@ -734,6 +771,8 @@
    "name": "교직원 생월자 상품권 서명부(생월자 정리)",
    "sub": "급여대장으로 생월자 명단·지급 시기별 서명부 작성",
    "kind": "web",
+   "type": "문서 자동화",
+   "field": "교직원 급여·복지",
    "url": "https://christmasgo7862-glitch.github.io/barodogu/files/birthday-gift.html",
    "isNew": true,
    "lead": "나이스 급여대장 엑셀을 넣으면 교직원 명단과 생일을 뽑아 지급 시기별로 나누고, 인쇄해 바로 서명받을 수 있는 상품권 서명부 엑셀을 만들어 줍니다. 파일은 내 PC 안에서만 처리됩니다.",
@@ -793,6 +832,8 @@
    "name": "특운직 시간 비례 급여 자동 계산기",
    "sub": "특수운영직군(시설미화원·시설당직원) 월 급여",
    "kind": "web",
+   "type": "계산기",
+   "field": "교육공무직원",
    "url": "https://christmasgo7862-glitch.github.io/barodogu/files/barotuksu.html",
    "isNew": true,
    "lead": "나이스 인사기록 [근무사항] 저장 엑셀을 끌어다 놓으면 시설미화원·시설당직원의 월 급여(기본급·정액급식비·가족수당·정기상여금·명절휴가비)를 지침대로 바로 계산합니다.",
@@ -859,6 +900,8 @@
    "name": "바로조리 급여",
    "sub": "영양사·조리사·조리실무사 방학 중 급여",
    "kind": "web",
+   "type": "계산기",
+   "field": "교육공무직원",
    "url": "https://christmasgo7862-glitch.github.io/barodogu/files/barojori.html",
    "isNew": true,
    "lead": "나이스 근무사항 파일을 끌어다 놓고 방학 시작일·개학일만 넣으면 달별 유급일수를 종류별 날짜까지 자동으로 세어 영양사·조리사·조리실무사의 방학 중 급여(기본급·근속수당·직무관련수당·정액급식비·가족수당·정기상여금·명절휴가비)를 계산합니다.",
@@ -940,6 +983,8 @@
    "name": "바로문서",
    "sub": "문서변환편집기 · 한글·엑셀·PDF",
    "kind": "web",
+   "type": "문서 자동화",
+   "field": "문서·업무",
    "url": "https://christmasgo7862-glitch.github.io/barodogu/files/barodoc.html",
    "isNew": true,
    "lead": "설치 없이 브라우저에서 한글(.hwp·.hwpx)·엑셀·PDF를 서로 바꾸고 고칩니다. 옛 한글(.hwp) 열기, 한글·엑셀→PDF, PDF→한글·엑셀(표 살림), PDF 쪽 정리·합치기, 주민번호·전화번호 가리기까지 — 파일은 이 컴퓨터 밖으로 나가지 않습니다.",
