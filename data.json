@@ -2,7 +2,7 @@
  "site": {
   "url": "https://christmasgo7862-glitch.github.io/barodogu/",
   "version": "3.9",
-  "updated": "2026.11.17"
+  "updated": "2026.11.18"
  },
  "counter": {
   "projectId": "barodogu-eaa32",
@@ -449,6 +449,10 @@
     {
      "date": "2026.11.17",
      "text": "급여명세서·계산 결과를 엑셀 파일로 저장(직인 그림 포함, 지급액 계·공제액 계·실지급액은 수식) — PDF 저장 대신 엑셀"
+    },
+    {
+     "date": "2026.11.18",
+     "text": "v27 — 이미지·PDF 인식 속도 복구 (v26에서 느려져 멈춘 것처럼 보이던 문제 해결)"
     }
    ],
    "icon": "clock",
