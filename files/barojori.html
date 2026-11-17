@@ -260,6 +260,7 @@ h3.sub{font-size:15px;margin:18px 0 4px}
 @media print{.longbox,.keep{display:none}}
 @media print{#printArea .pa h2{break-before:auto;page-break-before:auto;margin-top:18px}#printArea .pa .who{break-after:avoid}#printArea .pa ul{break-inside:avoid}}
 </style>
+<style>#pdfBtn,#pdfGuide{display:none!important}</style>
 </head>
 <body>
 <header class="top">
@@ -331,7 +332,7 @@ h3.sub{font-size:15px;margin:18px 0 4px}
     <h2><span class="num">3</span>결과</h2>
     <div class="mtabs" id="mtabs2" role="tablist" aria-label="결과 달"></div>
     <div class="scroll"><table class="sum" id="sum"></table></div>
-    <p class="hint man-hint">✎ 금액이 실제와 다르면 칸을 눌러 직접 고쳐 쓰고 Enter를 누르세요. 고친 칸은 노란색으로 바뀌고 합계·방학 기간 전체·엑셀·PDF·산출 근거에 그대로 반영됩니다. ↺를 누르거나 칸을 비우면 자동 계산으로 돌아갑니다.</p>
+    <p class="hint man-hint">✎ 금액이 실제와 다르면 칸을 눌러 직접 고쳐 쓰고 Enter를 누르세요. 고친 칸은 노란색으로 바뀌고 합계·방학 기간 전체·엑셀·인쇄·산출 근거에 그대로 반영됩니다. ↺를 누르거나 칸을 비우면 자동 계산으로 돌아갑니다.</p>
     <h3 class="sub">방학 기간 전체</h3>
     <div class="scroll"><table class="sum" id="sumAll"></table></div>
     <div class="btns">
@@ -340,7 +341,7 @@ h3.sub{font-size:15px;margin:18px 0 4px}
       <button class="btn line" id="printBtn" type="button">인쇄</button>
       <button class="btn line" id="copyBasis" type="button">산출 근거 복사</button>
     </div>
-    <p class="hint" style="margin:6px 0 0">엑셀·PDF·인쇄·산출 근거 복사는 모두 위에서 고른 달만 나옵니다. 다른 달은 달 단추를 눌러 바꾼 뒤 다시 누르세요.</p>
+    <p class="hint" style="margin:6px 0 0">엑셀·인쇄·산출 근거 복사는 모두 위에서 고른 달만 나옵니다. 다른 달은 달 단추를 눌러 바꾼 뒤 다시 누르세요.</p>
     <details class="box" style="margin-top:16px">
       <summary>기준 금액 확인 · 수정</summary>
       <p class="hint">2026 회계연도(2026. 3. ~ 2027. 2.) 금액이 들어 있습니다. 새 임금협약이 나오면 여기서 고쳐 쓰세요(모든 달에 적용).</p>
@@ -391,7 +392,7 @@ h3.sub{font-size:15px;margin:18px 0 4px}
           </div>
         </div>
       </div></li>
-      <li><b>달을 고르고 내려받거나 인쇄합니다</b><span>결과에서 달(예: 2월)을 누르면 [엑셀 파일 내려받기]·[PDF로 저장]·[인쇄]·[산출 근거 복사]가 모두 그 달만 나옵니다. 금액이 실제와 다르면 결과 표의 칸을 눌러 직접 고칠 수 있습니다.</span></li>
+      <li><b>달을 고르고 내려받거나 인쇄합니다</b><span>결과에서 달(예: 2월)을 누르면 [엑셀 파일 내려받기]·[인쇄]·[산출 근거 복사]가 모두 그 달만 나옵니다. 엑셀 파일은 열어서 바로 고칠 수 있습니다. 금액이 실제와 다르면 결과 표의 칸을 눌러 직접 고칠 수 있습니다.</span></li>
     </ol>
     <div class="btns" style="justify-content:flex-end"><button class="btn" id="gClose" type="button">시작하기</button></div>
   </div>
