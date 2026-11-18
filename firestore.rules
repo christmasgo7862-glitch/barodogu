@@ -25,7 +25,7 @@ service cloud.firestore {
         && request.resource.data.t == request.time;
       allow delete: if pid.matches('^[a-z0-9]{20}$');
     }
-    // ── 의견 게시판(board)·개발의뢰(requests): 누구나 읽고 쓰기, 답변·숨기기·삭제는 제작자만 ──
+    // ── 의견 게시판(board)·개발의뢰(requests): 누구나 읽기, 글쓰기는 회원만, 답변·숨기기·삭제는 제작자만 ──
     function admin() {
       return request.auth != null && request.auth.token.email == 'christmasgo7862@gmail.com'
         && request.auth.token.email_verified == true;
@@ -33,7 +33,47 @@ service cloud.firestore {
     function d() { return request.resource.data; }
     function txt(f, lo, hi) { return d()[f] is string && d()[f].size() >= lo && d()[f].size() <= hi; }
     function optTxt(f, hi) { return !(f in d()) || txt(f, 0, hi); }
-    function newPost() { return d().t == request.time && d().up == 0 && txt('name', 1, 20) && optTxt('org', 30); }
+    // ── 회원(members)·별명(nicks) ──
+    //    익명 로그인 번호(uid) 하나에 회원 하나. 이름·소속·별명만 저장, 회원 정보는 본인·제작자만 읽기
+    function me() { return request.auth != null ? request.auth.uid : ''; }
+    function memPath(u) { return /databases/$(database)/documents/members/$(u); }
+    function nickPath(n) { return /databases/$(database)/documents/nicks/$(n); }
+    function nickOk(n) { return n is string && n.size() >= 2 && n.size() <= 12 && n.matches('^[0-9A-Za-z가-힣ㄱ-ㅎㅏ-ㅣ._-]+$'); }
+    function memberPost() {
+      return me() != '' && d().uid == me() && nickOk(d().name)
+        && exists(nickPath(d().name)) && get(nickPath(d().name)).data.uid == me()
+        && exists(memPath(me())) && get(memPath(me())).data.nick == d().name
+        && d().get('org', '') == get(memPath(me())).data.org;
+    }
+    // 글은 회원만(별명·소속 확인). 제작자는 회원가입 없이 쓸 수 있음
+    function newPost() { return d().t == request.time && d().up == 0 && txt('name', 1, 20) && optTxt('org', 30) && (memberPost() || admin()); }
+
+    match /members/{uid} {
+      allow get: if admin() || me() == uid;
+      allow list: if admin();
+      allow create: if me() == uid
+        && d().keys().hasOnly(['name', 'org', 'nick', 't']) && d().keys().hasAll(['name', 'org', 'nick', 't'])
+        && txt('name', 1, 20) && txt('org', 1, 30) && nickOk(d().nick) && d().t == request.time
+        && getAfter(nickPath(d().nick)).data.uid == uid;
+      allow update: if false;
+      allow delete: if me() == uid || admin();
+    }
+    match /nicks/{nick} {
+      allow get: if true;
+      allow list: if false;
+      // 새 별명
+      allow create: if me() != '' && nickOk(nick)
+        && d().keys().hasOnly(['uid', 't']) && d().uid == me() && d().t == request.time
+        && getAfter(memPath(me())).data.nick == nick;
+      // 다른 기기에서 다시 가입: 같은 이름·소속이면 별명을 이어서 쓰기
+      allow update: if me() != ''
+        && d().keys().hasOnly(['uid', 't']) && d().uid == me() && d().t == request.time
+        && getAfter(memPath(me())).data.nick == nick
+        && (!exists(memPath(resource.data.uid))
+          || (get(memPath(resource.data.uid)).data.name == getAfter(memPath(me())).data.name
+            && get(memPath(resource.data.uid)).data.org == getAfter(memPath(me())).data.org));
+      allow delete: if (me() != '' && resource.data.uid == me()) || admin();
+    }
     function upOnly() {
       return d().diff(resource.data).affectedKeys().hasOnly(['up']) && d().up == resource.data.get('up', 0) + 1;
     }
@@ -46,7 +86,7 @@ service cloud.firestore {
     match /board/{id} {
       allow read: if true;
       allow create: if id.matches('^[A-Za-z0-9]{20}$')
-        && d().keys().hasOnly(['tool', 'cat', 'title', 'body', 'name', 'org', 't', 'up'])
+        && d().keys().hasOnly(['tool', 'cat', 'title', 'body', 'name', 'org', 'uid', 't', 'up'])
         && d().keys().hasAll(['tool', 'cat', 'title', 'body', 'name', 't', 'up'])
         && txt('tool', 1, 40) && d().cat in ['오류', '개선', '질문', '기타']
         && txt('title', 2, 60) && txt('body', 5, 2000) && newPost();
@@ -56,7 +96,7 @@ service cloud.firestore {
     match /requests/{id} {
       allow read: if true;
       allow create: if id.matches('^[A-Za-z0-9]{20}$')
-        && d().keys().hasOnly(['title', 'before', 'after', 'note', 'name', 'org', 't', 'up'])
+        && d().keys().hasOnly(['title', 'before', 'after', 'note', 'name', 'org', 'uid', 't', 'up'])
         && d().keys().hasAll(['title', 'before', 'after', 'name', 't', 'up'])
         && txt('title', 2, 60) && txt('before', 5, 1500) && txt('after', 5, 1500)
         && optTxt('note', 300) && newPost();
