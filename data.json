@@ -25,7 +25,7 @@
  "news": [
   {
    "date": "2026.11.23",
-   "title": "가족수당 점검결과 자동서식 — 나이스 파일만 넣으면 끝",
+   "title": "가족수당 점검 자동서식기 — 나이스 파일만 넣으면 끝",
    "text": "나이스 가족사항 엑셀 파일만 넣으면 부부공무원 가족수당 점검결과가 자동으로 나옵니다. 중복지급 확인(가족수당중복지급확인)은 꼭 하세요.",
    "tool": "gajok-jeomgeom"
   },
@@ -767,12 +767,12 @@
   },
   {
    "id": "gajok-jeomgeom",
-   "name": "가족수당 점검결과 자동서식",
+   "name": "가족수당 점검 자동서식기",
    "sub": "부부공무원 가족수당 점검결과 자동 작성",
    "kind": "excel",
    "type": "엑셀 서식",
    "field": "교직원 급여·복지",
-   "url": "https://christmasgo7862-glitch.github.io/barodogu/files/gajok-jeomgeom.xlsm?v=20261123",
+   "url": "https://christmasgo7862-glitch.github.io/barodogu/files/gajok-jeomgeom.xlsm?v=20261123-2",
    "isNew": true,
    "lead": "나이스 가족사항 엑셀 파일만 넣으면 부부공무원 가족수당 점검결과가 자동으로 나옵니다.",
    "feats": [
@@ -820,7 +820,7 @@
     }
    ],
    "short": "가족수당 점검",
-   "fileName": "가족수당_점검결과_자동서식.xlsm",
+   "fileName": "가족수당_점검_자동서식기.xlsm",
    "area": "급여 · 가족수당"
   },
   {
