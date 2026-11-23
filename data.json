@@ -772,7 +772,7 @@
    "kind": "excel",
    "type": "엑셀 서식",
    "field": "교직원 급여·복지",
-   "url": "https://christmasgo7862-glitch.github.io/barodogu/files/gajok-jeomgeom.xlsm?v=20261123-5",
+   "url": "https://christmasgo7862-glitch.github.io/barodogu/files/gajok-jeomgeom.xlsm?v=20261123-6",
    "isNew": true,
    "lead": "나이스 가족사항 엑셀 파일만 넣으면 부부공무원 가족수당 점검결과가 자동으로 나옵니다.",
    "feats": [
@@ -799,6 +799,10 @@
     "엑셀"
    ],
    "history": [
+    {
+     "date": "2026.11.23",
+     "text": "파일 고르는 창이 안 열리는 프로그램(런타임 오류 429 등)에서도 파일을 고를 수 있게 보완"
+    },
     {
      "date": "2026.11.23",
      "text": "[부부공무원명단] N열에서 부부공무원 Y/N을 고르면 Y인 사람만 점검결과에 나오도록 바꿈, 시트마다 빨간 글씨 안내 팝업 추가"
@@ -1027,7 +1031,7 @@
    "kind": "excel",
    "type": "엑셀 서식",
    "field": "학교회계·세무",
-   "url": "https://christmasgo7862-glitch.github.io/barodogu/files/ten-days.xlsm?v=20261106-2",
+   "url": "https://christmasgo7862-glitch.github.io/barodogu/files/ten-days.xlsm?v=20261123-1",
    "lead": "매달 받는 급여·기관부담금 자료 6개를 순서대로 넣으면 K-에듀파인 수납금액과 홈택스·위택스 신고금액, 반환 등록 목록까지 자동으로 정리됩니다.",
    "feats": [
     "자료 6개를 [다음 파일 넣기] 버튼으로 차례로 불러오기",
@@ -1073,6 +1077,10 @@
     {
      "date": "2026.11.06",
      "text": "[반환내역] 채권자 칸 직접 수정 가능, 기본값에서 지역 이름 제외"
+    },
+    {
+     "date": "2026.11.23",
+     "text": "일부 PC에서 파일 넣기 때 나던 런타임 오류 429 보완 — 파일 고르는 창이 안 열리면 다른 방식으로 파일을 고르게 함, 오류 창에 오류 번호 표시"
     }
    ],
    "icon": "sheet",
