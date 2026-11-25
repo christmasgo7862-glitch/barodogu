@@ -1,7 +1,7 @@
 {
  "site": {
   "url": "https://christmasgo7862-glitch.github.io/barodogu/",
-  "version": "3.15",
+  "version": "3.16",
   "updated": "2026.11.24",
   "fields": [
    "교육공무직원",
@@ -9,7 +9,8 @@
    "호봉·인사",
    "학교회계·세무",
    "학교운영위원회",
-   "문서·업무"
+   "문서·업무",
+   "(회계말) 인건비 정산"
   ],
   "types": [
    "계산기",
@@ -1383,8 +1384,8 @@
    "sub": "통상임금·연차수당·퇴직금(DC) 포함",
    "kind": "excel",
    "type": "엑셀 서식",
-   "field": "교육공무직원",
-   "url": "https://christmasgo7862-glitch.github.io/barodogu/files/tkb-jeongsan.xlsm?v=20261124-1",
+   "field": "(회계말) 인건비 정산",
+   "url": "https://christmasgo7862-glitch.github.io/barodogu/files/tkb-jeongsan.xlsm?v=20261125-1",
    "isNew": true,
    "lead": "사업관리카드·특운직 계산기·기관부담금 파일 3개를 넣으면 시설미화원·시설당직원 인건비의 12~2월 지출과 남는 예산, 통상임금·연차수당·퇴직금(DC)까지 자동으로 나옵니다.",
    "feats": [
@@ -1420,6 +1421,10 @@
     {
      "date": "2026.11.24",
      "text": "서식 파일 올림(매크로 사용 .xlsm)"
+    },
+    {
+     "date": "2026.11.25",
+     "text": "팝업창에 특운직 계산기·20일 기관부담금 바로 가기 단추 추가"
     }
    ],
    "icon": "sheet",
