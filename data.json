@@ -960,7 +960,7 @@
    "kind": "excel",
    "type": "엑셀 서식",
    "field": "교육공무직원",
-   "url": "https://christmasgo7862-glitch.github.io/barodogu/files/yeoncha-onestop.xlsx?v=20261124-1",
+   "url": "https://christmasgo7862-glitch.github.io/barodogu/files/yeoncha-onestop.xlsx?v=20261128-1",
    "lead": "교육공무직원의 직종·근무형태별 통상임금과 연차수당을 한 줄에 한 명씩 입력해 계산합니다. 기준일 하나만 넣으면 재직자·퇴직자, 회계연도 말·중간 날짜를 알아서 구분합니다.",
    "feats": [
     "기준일 하나로 계산 — 퇴직·재직, 회계연도 말·중간 날짜를 자동 구분",
@@ -1008,6 +1008,10 @@
     {
      "date": "2026.11.13",
      "text": "입력 점검 강화 — 주 소정근로시간 공백·0·음수, 연차 사용일수 음수·문자, 주 15시간 미만, 전임경력 문자 입력을 모두 경고로 처리"
+    },
+    {
+     "date": "2026.11.28",
+     "text": "[예시]를 복사해 [입력명부]에 붙여넣으면 입사일·기준일이 숫자(40603 등)로 보이던 문제 수정"
     }
    ],
    "icon": "sheet",
